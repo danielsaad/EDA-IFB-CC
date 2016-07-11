@@ -8,6 +8,7 @@ LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/lib)
 
 add_subdirectory(Listas)
 add_subdirectory(Pilha)
+add_subdirectory(Filas)
 add_subdirectory(Utils)
 add_subdirectory(Exemplos)
 add_subdirectory(Vetores)

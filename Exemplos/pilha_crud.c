@@ -69,6 +69,7 @@ int main(void){
         p =  *(pessoa*) stack_top(s);
         stack_pop(s);
         imprime_pessoa(&p);
+
         printf("\n");
     }
     delete_stack(&s);
