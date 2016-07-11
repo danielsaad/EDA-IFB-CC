@@ -14,10 +14,10 @@ typedef struct list_node_t{
     struct list_node_t* next; /*ponteiro para o próximo elemento*/
 }list_node_t;
 
-typedef list_node_t* list_iterator;
 
+typedef list_node_t* list_iterator_t;
 
-typedef struct linked_list_t{
+typedef struct list_t{
     list_node_t* head; /*Cabeça da Lista*/
     list_node_t* tail; /*Cauda da Lista*/
     list_node_constructor_fn constructor; /*Função para construir o objeto*/
@@ -62,6 +62,6 @@ size_t list_size(list_t* l);
 size_t list_empty(list_t* l);
 
 /*Operações sobre iterators*/
-void* list_iterator_data(list_iterator it);
+void* list_iterator_data(list_iterator_t it);
 
 #endif // LIST_H_INCLUDED

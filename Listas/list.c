@@ -23,12 +23,10 @@ void list_initialize(list_t** l,list_node_constructor_fn constructor,
 }
 
 void list_delete(list_t** l){
-    list_iterator it = (*l)->head;
+    list_iterator_t it = (*l)->head;
     while(it!=NULL){
         (*l)->head = it->next;
-        if((*l)->destructor!=NULL){
-            (*l)->destructor(it->data);
-        }
+        (*l)->destructor(it->data);
         free(it);
         it = (*l)->head;
     }
@@ -56,7 +54,7 @@ void list_insert(list_t* l,void* data,int i){
     else{
         /*Inserção no meio da lista*/
         /*Precisamos encontrar o elemento que antecede a posição i*/
-        list_iterator it = l->head;
+        list_iterator_t it = l->head;
         int k;
         for(k=0;k<i-1;k++){
             it = it->next;
@@ -109,7 +107,7 @@ void list_remove(list_t* l,int i){
     }
     else if(i==list_size(l)-1){
         node = l->tail;
-        list_iterator it = l->head;
+        list_iterator_t it = l->head;
         while(it->next!=NULL){
             it = it->next;
         }
@@ -117,7 +115,7 @@ void list_remove(list_t* l,int i){
         l->tail->next = NULL;
     }
     else{
-        list_iterator it = l->head;
+        list_iterator_t it = l->head;
         int k;
         for(k=0;k<i-1;k++){
             it = it->next;
@@ -138,7 +136,7 @@ void list_remove_head(list_t* l){
         l->tail = NULL;
     }
     else{
-        list_iterator it = l->head->next;
+        list_iterator_t it = l->head->next;
         l->destructor(l->head);
         l->head = it;
     }
@@ -152,7 +150,7 @@ void list_remove_tail(list_t* l){
         l->tail = NULL;
     }
     else{
-        list_iterator it = l->head;
+        list_iterator_t it = l->head;
         while(it->next!=NULL){
             it = it->next;
         }
@@ -164,7 +162,7 @@ void list_remove_tail(list_t* l){
 
 void* list_access(list_t* l,int i){
     assert(list_size(l)>0 && i<list_size(l));
-    list_iterator it = l->head;
+    list_iterator_t it = l->head;
     int j;
     for(j=0;j<i-1;j++){
         it = it->next;
