@@ -24,11 +24,8 @@ void list_initialize(list_t** l,list_node_constructor_fn constructor,
 
 void list_delete(list_t** l){
     list_iterator_t it = (*l)->head;
-    while(it!=NULL){
-        (*l)->head = it->next;
-        (*l)->destructor(it->data);
-        free(it);
-        it = (*l)->head;
+    while(!list_empty(*l)){
+        list_remove_head(*l);
     }
     free(*l);
     *l = NULL;
@@ -123,29 +120,31 @@ void list_remove(list_t* l,int i){
         node = it->next;
         it->next = node->next;
     }
-    l->destructor(node);
+    l->destructor(node->data);
+    free(node);
     l->size--;
 
 }
 
 void list_remove_head(list_t* l){
     assert(!list_empty(l));
+    list_iterator_t it = l->head;
     if(list_size(l)==1){
-        l->destructor(l->head);
         l->head = NULL;
         l->tail = NULL;
     }
     else{
-        list_iterator_t it = l->head->next;
-        l->destructor(l->head);
-        l->head = it;
+        l->head = l->head->next;
     }
+    l->destructor(it->data);
+    free(it);
 }
 
 void list_remove_tail(list_t* l){
     assert(list_size(l)>0);
     if(list_size(l)==1){
-        l->destructor(l->tail);
+        l->destructor(l->tail->data);
+        free(l->tail);
         l->head = NULL;
         l->tail = NULL;
     }
@@ -155,7 +154,8 @@ void list_remove_tail(list_t* l){
             it = it->next;
         }
         it->next = NULL;
-        l->destructor(l->tail);
+        l->destructor(l->tail->data);
+        free(l->tail);
         l->tail = it;
     }
 }
