@@ -23,7 +23,6 @@ void list_initialize(list_t** l,list_node_constructor_fn constructor,
 }
 
 void list_delete(list_t** l){
-    list_iterator_t it = (*l)->head;
     while(!list_empty(*l)){
         list_remove_head(*l);
     }
@@ -31,7 +30,7 @@ void list_delete(list_t** l){
     *l = NULL;
 }
 
-void list_insert(list_t* l,void* data,int i){
+void list_insert(list_t* l,void* data,size_t i){
     assert(i<=list_size(l));
     list_node_t* new_node = list_node_new(data,l->constructor);
     if(list_empty(l)){
@@ -88,7 +87,7 @@ void list_append(list_t* l, void* data){
 }
 
 /**Remove o elemento da posição i da lista**/
-void list_remove(list_t* l,int i){
+void list_remove(list_t* l,size_t i){
     assert(!list_empty(l) && i<list_size(l));
     list_node_t* node;
     if(list_empty(l)){
@@ -160,7 +159,7 @@ void list_remove_tail(list_t* l){
     }
 }
 
-void* list_access(list_t* l,int i){
+void* list_access(list_t* l,size_t i){
     assert(list_size(l)>0 && i<list_size(l));
     list_iterator_t it = l->head;
     int j;

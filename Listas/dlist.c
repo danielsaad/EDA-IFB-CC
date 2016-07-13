@@ -24,15 +24,14 @@ void dlist_initialize(dlist_t** l,dlist_node_constructor_fn constructor,
 }
 
 void dlist_delete(dlist_t** l){
-    dlist_iterator_t it = (*l)->head;
-    while(dlist_empty(l)){
-        dlist_remove_head(l);
+    while(!dlist_empty(*l)){
+        dlist_remove_head(*l);
     }
     free(*l);
     *l = NULL;
 }
 
-void dlist_insert(dlist_t* l,void* data,int i){
+void dlist_insert(dlist_t* l,void* data,size_t i){
     assert(i<=dlist_size(l));
     dlist_node_t* new_node = dlist_node_new(data,l->constructor);
     if(dlist_empty(l)){
@@ -98,7 +97,7 @@ void dlist_append(dlist_t* l, void* data){
 }
 
 /**Remove o elemento da posição i da dlista**/
-void dlist_remove(dlist_t* l,int i){
+void dlist_remove(dlist_t* l,size_t i){
     assert(!dlist_empty(l) && i<dlist_size(l));
     dlist_node_t* node;
     if(dlist_size(l)==1){
@@ -163,7 +162,7 @@ void dlist_remove_tail(dlist_t* l){
     free(it);
 }
 
-void* dlist_access(dlist_t* l,int i){
+void* dlist_access(dlist_t* l,size_t i){
     assert(!dlist_empty(l) && i<dlist_size(l));
     dlist_iterator_t it = l->head;
     int j;

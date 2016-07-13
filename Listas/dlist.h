@@ -16,9 +16,9 @@ typedef struct dlist_node_t{
 }dlist_node_t;
 
 
-typedef dlist_node_t* ddlist_iterator_t;
+typedef dlist_node_t* dlist_iterator_t;
 
-typedef struct ddlist_t{
+typedef struct dlist_t{
     dlist_node_t* head; /*Cabeça da dlista*/
     dlist_node_t* tail; /*Cauda da dlista*/
     dlist_node_constructor_fn constructor; /*Função para construir o objeto*/
@@ -31,7 +31,7 @@ typedef struct ddlist_t{
 
 /**Operações nos nós**/
 /**Cria um novo nó**/
-dlist_node_t* ddlist_node_new(void* data,ddlist_node_constructor_fn constructor);
+dlist_node_t* dlist_node_new(void* data, dlist_node_constructor_fn constructor);
 
 /**Operações na dlista**/
 /**Inicializa a dlista**/
@@ -40,19 +40,19 @@ void dlist_initialize(dlist_t** l,dlist_node_constructor_fn constructor,
 /**Deleta a dlista**/
 void dlist_delete(dlist_t** l);
 /**Insere um elemento na dlista na posição i**/
-void dlist_insert(dlist_t* l,void* data,int i);
+void dlist_insert(dlist_t* l,void* data,size_t i);
 /**Anexa um elemento na cabeça da dlista**/
 void dlist_prepend(dlist_t* l,void* data);
 /**Anexa um elemento na cauda da dlista**/
 void dlist_append(dlist_t* l, void* data);
 /**Remove o elemento da posição i da dlista**/
-void dlist_remove(dlist_t* l,int i);
+void dlist_remove(dlist_t* l,size_t i);
 /**Remove a cabeça da dlista**/
 void dlist_remove_head(dlist_t* l);
 /**Remove a cauda da dlista**/
 void dlist_remove_tail(dlist_t* l);
 /**Acessa o conteúdo da dlista na posição i**/
-void* dlist_access(dlist_t* l,int i);
+void* dlist_access(dlist_t* l,size_t i);
 /**Acessa o conteúdo da cabeça**/
 void* dlist_access_head(dlist_t* l);
 /**Acessa o conteúdo da cauda**/

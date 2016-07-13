@@ -39,19 +39,19 @@ void list_initialize(list_t** l,list_node_constructor_fn constructor,
 /**Deleta a lista**/
 void list_delete(list_t** l);
 /**Insere um elemento na lista na posição i**/
-void list_insert(list_t* l,void* data,int i);
+void list_insert(list_t* l,void* data,size_t i);
 /**Anexa um elemento na cabeça da lista**/
 void list_prepend(list_t* l,void* data);
 /**Anexa um elemento na cauda da lista**/
 void list_append(list_t* l, void* data);
 /**Remove o elemento da posição i da lista**/
-void list_remove(list_t* l,int i);
+void list_remove(list_t* l,size_t i);
 /**Remove a cabeça da lista**/
 void list_remove_head(list_t* l);
 /**Remove a cauda da lista**/
 void list_remove_tail(list_t* l);
 /**Acessa o conteúdo da lista na posição i**/
-void* list_access(list_t* l,int i);
+void* list_access(list_t* l,size_t i);
 /**Acessa o conteúdo da cabeça**/
 void* list_access_head(list_t* l);
 /**Acessa o conteúdo da cauda**/
