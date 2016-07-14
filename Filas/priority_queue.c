@@ -5,8 +5,8 @@
 
 static void priority_queue_heapify_bottom_up(priority_queue_t* pq,size_t i){
     size_t p;
-    for(p=i/2;i!=0;p=p/2){
-        if(pq->comparator(pq->data[i],pq->data[p]>0)){
+    for(p=(i-1)/2;i!=0;p=(p-1)/2){
+        if(pq->comparator(pq->data[i],pq->data[p])>0){
             break;
         }
         void* aux = pq->data[i];
@@ -19,9 +19,9 @@ static void priority_queue_heapify_bottom_up(priority_queue_t* pq,size_t i){
 
 static void priority_queue_heapify_top_down(priority_queue_t* pq,size_t i){
     size_t l,r;
-    size_t smallest;
+    size_t smallest = i;
     while(i<priority_queue_size(pq)){
-        smallest = i;
+        i = smallest;
         l = 2*i +1;
         r = 2*i +2;
         if(l<priority_queue_size(pq) && pq->comparator(pq->data[i],pq->data[l])>0){
@@ -33,6 +33,9 @@ static void priority_queue_heapify_top_down(priority_queue_t* pq,size_t i){
         if(smallest==i){
             break;
         }
+        void* aux = pq->data[i];
+        pq->data[i] = pq->data[smallest];
+        pq->data[smallest] = aux;
     }
 }
 
@@ -52,6 +55,7 @@ void priority_queue_delete(priority_queue_t** pq){
     while(!priority_queue_empty(*pq)){
         priority_queue_pop(*pq);
     }
+    reallocx((*pq)->data,0);
     free(*pq);
     *pq = NULL;
 }
@@ -64,7 +68,7 @@ void priority_queue_push(priority_queue_t* pq,void* data){
         else{
             pq->capacity*=2;
         }
-        pq->data = reallocx(pq->data,pq->capacity);
+        pq->data = reallocx(pq->data,pq->capacity * sizeof(void*));
     }
     pq->data[pq->size] = pq->constructor(data);
     priority_queue_heapify_bottom_up(pq,pq->size);
@@ -79,15 +83,13 @@ void* priority_queue_front(priority_queue_t* pq){
 void priority_queue_pop(priority_queue_t* pq){
     assert(!priority_queue_empty(pq));
     pq->size--;
-    pq->destructor(pq->data[pq->size]);
-    if(pq->size == pq->capacity/2){
-        pq->data = reallocx(pq->data,pq->capacity/2);
-    }
+    pq->destructor(pq->data[0]);
     if(!priority_queue_empty(pq)){
-        void* aux = pq->data[pq->size-1];
-        pq->data[pq->size-1] = pq->data[0];
-        pq->data[0] = aux;
-        priority_queue_heapify_bottom_up(pq,0);
+        pq->data[0] = pq->data[pq->size];
+        priority_queue_heapify_top_down(pq,0);
+    }
+    if(pq->size == pq->capacity/2){
+        pq->data = reallocx(pq->data,pq->capacity/2 * sizeof(void*));
     }
 }
 

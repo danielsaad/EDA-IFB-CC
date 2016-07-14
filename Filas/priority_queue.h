@@ -6,7 +6,7 @@
 
 typedef void* (*priority_queue_element_constructor_fn) (void*);
 typedef void (*priority_queue_element_destructor_fn)(void *);
-typedef int (*priority_queue_compare_fn)(void *,void*);
+typedef int (*priority_queue_compare_fn)(const void*,const void*);
 
 
 typedef struct priority_queue_t{
