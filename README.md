@@ -7,10 +7,10 @@ Material auxiliar pra Disciplina de Estruturas de Dados I do curso superior em A
 Para compilar os executáveis e a biblioteca você deverá possuir o CMAKE instalado, bem como o gcc instalado.
 ###Compilação
 ```shell
-	mkdir build
-	cd build
-	cmake ..
-	make install
+mkdir build
+cd build
+cmake ..
+make install
 ```
 
 Após isso os cabeçalhos estarão na pasta *includes* e a biblioteca estática estará na pasta *lib*. Por fim,
