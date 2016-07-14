@@ -55,7 +55,6 @@ void priority_queue_delete(priority_queue_t** pq){
     while(!priority_queue_empty(*pq)){
         priority_queue_pop(*pq);
     }
-    reallocx((*pq)->data,0);
     free(*pq);
     *pq = NULL;
 }
@@ -90,6 +89,7 @@ void priority_queue_pop(priority_queue_t* pq){
     }
     if(pq->size == pq->capacity/2){
         pq->data = reallocx(pq->data,pq->capacity/2 * sizeof(void*));
+        pq->capacity = pq->capacity/2;
     }
 }
 
