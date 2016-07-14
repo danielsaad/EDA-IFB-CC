@@ -13,6 +13,6 @@ cmake ..
 make install
 ```
 
-Após isso os cabeçalhos estarão na pasta _includes_ e a biblioteca estática estará na pasta _lib_. Por fim,
-os executáveis se encontrarão na pasta _bin_.
+Após isso os cabeçalhos estarão na pasta **includes** e a biblioteca estática estará na pasta **lib**. Por fim,
+os executáveis se encontrarão na pasta **bin**.
 
