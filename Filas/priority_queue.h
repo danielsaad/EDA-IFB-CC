@@ -6,19 +6,20 @@
 
 typedef void* (*priority_queue_element_constructor_fn) (void*);
 typedef void (*priority_queue_element_destructor_fn)(void *);
-typedef int (*priority_queue_compare_fn)(const void*,const void*);
+typedef int (*priority_queue_element_compare_fn)(const void*,const void*);
 
 
 typedef struct priority_queue_t{
     void** data;
-    priority_queue_compare_fn comparator;
+    priority_queue_element_compare_fn comparator;
     priority_queue_element_constructor_fn constructor;
     priority_queue_element_destructor_fn destructor;
     size_t size;
     size_t capacity;
 }priority_queue_t;
 
-void priority_queue_initialize(priority_queue_t** pq, priority_queue_compare_fn comparator,
+void priority_queue_initialize(priority_queue_t** pq,
+                               priority_queue_element_compare_fn comparator,
                                priority_queue_element_constructor_fn constructor,
                                priority_queue_element_destructor_fn destructor);
 void priority_queue_delete(priority_queue_t** pq);
