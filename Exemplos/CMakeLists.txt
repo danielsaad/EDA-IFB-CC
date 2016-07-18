@@ -15,7 +15,7 @@ LIST(APPEND src_list
 	./stack_crud.c
 	./ponteiro_vetor_exemplo_2.c
 	./funcoes_exemplo_1.c
-	./pointer_example_1.c
+	./ponteiro_exemplo_1.c
 	./queue_crud.c
 	./list_crud.c
 	./bst_crud.c

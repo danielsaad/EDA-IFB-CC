@@ -1,7 +1,14 @@
+/**
+ * Autor: Daniel Saad Nogueira Nunes
+ * Comentários: Este programa utiliza todos os métodos de ordenação
+ * implementados pela biblioteca ED1.
+**/
+
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
+#include "alloc.h"
 #include "sorting.h"
 
 #define SIZE 10000 /**tamanho do vetor a ser gerado**/
@@ -23,7 +30,7 @@ int main(void){
     int *v_copy,*v;
     size_t tam = SIZE;
 
-    v_copy = calloc(tam,sizeof(int));
+    v_copy = callocx(tam,sizeof(int));
     v = calloc(tam,sizeof(int));
     /*Gera números aleatórios*/
     for(i=0;i<tam;i++){
