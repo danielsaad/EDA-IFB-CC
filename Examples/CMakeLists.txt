@@ -18,7 +18,7 @@ LIST(APPEND src_list
 	./bst_crud.c
 	./pass_by_reference_example_2.c
 	./pointer_example_2.c
-	./dlista_cruc.c
+	./dlist_crud.c
 	./deque_crud.c
 	./pointer_allocation_example_2.c
 	./memory_leak_example_1.c
