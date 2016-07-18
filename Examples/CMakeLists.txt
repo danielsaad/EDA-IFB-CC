@@ -15,7 +15,7 @@ target_link_libraries(fila_crud ed1)
 target_link_libraries(deque_crud ed1)
 target_link_libraries(priority_queue_example ed1)
 target_link_libraries(bst_example_1 ed1)
-target_link_libraries(bst_crud tree ed1)
+target_link_libraries(bst_crud ed1)
 target_link_libraries(sort_example ed1)
 
 install(TARGETS lista_crud RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin)
