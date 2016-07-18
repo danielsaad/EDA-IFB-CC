@@ -14,8 +14,6 @@ endif(CMAKE_BUILD_TYPE MATCHES DEBUG)
 LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/lib)
 
 
-MESSAGE(STATUS "Lib files: ${lib_files}")
-
 LIST(APPEND header_list
 	./Ordenacao/insertion_sort.h
 	./Ordenacao/sorting.h
@@ -39,9 +37,9 @@ LIST(APPEND header_list
 
 
 #cópia dos cabeçalhos para o diretório include
-foreach(header ${header_files})
+foreach(header ${header_list})
 	FILE(COPY ${header} DESTINATION ${CMAKE_SOURCE_DIR}/include)
-endforeach(header ${header_files})
+endforeach(header ${header_list})
 
 
 #compilação dos arquivos da biblioteca ed1.a
