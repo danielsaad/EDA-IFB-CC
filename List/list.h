@@ -28,9 +28,6 @@ typedef struct list_t{
 
 /** Protótipos **/
 
-/**Operações nos nós**/
-/**Cria um novo nó**/
-list_node_t* list_node_new(void* data,list_node_constructor_fn constructor);
 
 /**Operações na lista**/
 /**Inicializa a lista**/

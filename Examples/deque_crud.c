@@ -58,7 +58,7 @@ int main(void){
     int i;
     deque_t* d;
     pessoa p;
-    initialize_deque(&d,constructor_pessoa,destructor_pessoa);
+    deque_initialize(&d,constructor_pessoa,destructor_pessoa);
     for(i=0;i<5;i++){
         printf("Cadastrando pessoa %d\n",i+1);
         cadastra_pessoa(&p);
@@ -84,6 +84,6 @@ int main(void){
         printf("\n");
         i++;
     }
-    delete_deque(&d);
+    deque_delete(&d);
     return 0;
 }

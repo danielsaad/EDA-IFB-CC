@@ -29,10 +29,6 @@ typedef struct dlist_t{
 
 /** Protótipos **/
 
-/**Operações nos nós**/
-/**Cria um novo nó**/
-dlist_node_t* dlist_node_new(void* data, dlist_node_constructor_fn constructor);
-
 /**Operações na dlista**/
 /**Inicializa a dlista**/
 void dlist_initialize(dlist_t** l,dlist_node_constructor_fn constructor,

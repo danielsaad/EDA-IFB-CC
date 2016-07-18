@@ -3,7 +3,7 @@
 #include "deque.h"
 
 /**Inicializa o deque**/
-void initialize_deque(deque_t** d,deque_node_constructor_fn constructor,
+void deque_initialize(deque_t** d,deque_node_constructor_fn constructor,
                       deque_node_destructor_fn destructor){
     (*d) = mallocx(sizeof(deque_t));
     (*d)->front = NULL;
@@ -14,7 +14,7 @@ void initialize_deque(deque_t** d,deque_node_constructor_fn constructor,
 }
 
 /**Deleta o deque**/
-void delete_deque(deque_t** d){
+void deque_delete(deque_t** d){
     while(!deque_empty(*d)){
         deque_pop_front(*d);
     }

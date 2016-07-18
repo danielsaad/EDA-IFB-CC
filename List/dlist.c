@@ -2,9 +2,9 @@
 #include "dlist.h"
 #include "../Utils/alloc.h"
 
+static dlist_node_t* dlist_new_node(void* data,dlist_node_constructor_fn constructor);
 
-
-dlist_node_t* dlist_node_new(void* data,dlist_node_constructor_fn constructor){
+static dlist_node_t* dlist_new_node(void* data,dlist_node_constructor_fn constructor){
     dlist_node_t* new_node =  mallocx(sizeof(dlist_node_t));
     new_node->data = constructor(data);
     new_node->next = NULL;
@@ -33,7 +33,7 @@ void dlist_delete(dlist_t** l){
 
 void dlist_insert(dlist_t* l,void* data,size_t i){
     assert(i<=dlist_size(l));
-    dlist_node_t* new_node = dlist_node_new(data,l->constructor);
+    dlist_node_t* new_node = dlist_new_node(data,l->constructor);
     if(dlist_empty(l)){
         /*Se a dlista está vazia, cabeça e cauda apontam para o mesmo lugar*/
         l->head = new_node;
@@ -70,7 +70,7 @@ void dlist_insert(dlist_t* l,void* data,size_t i){
 
 /** Insere um elemento na cabeça da dlista **/
 void dlist_prepend(dlist_t* l,void* data){
-    dlist_node_t* new_node = dlist_node_new(data,l->constructor);
+    dlist_node_t* new_node = dlist_new_node(data,l->constructor);
     new_node->next = l->head;
     if(dlist_empty(l)){
         l->tail = new_node;
@@ -84,7 +84,7 @@ void dlist_prepend(dlist_t* l,void* data){
 
 /**Insere um elemento na cauda da dlista **/
 void dlist_append(dlist_t* l, void* data){
-    dlist_node_t* new_node = dlist_node_new(data,l->constructor);
+    dlist_node_t* new_node = dlist_new_node(data,l->constructor);
     new_node->prev = l->tail;
     if(dlist_empty(l)){
         l->head = new_node;

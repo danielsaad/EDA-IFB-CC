@@ -4,7 +4,7 @@
 #include "../Utils/alloc.h"
 
 /**Inicializa pilha**/
-void initialize_stack(stack_t** s,stack_node_constructor_fn constructor,
+void stack_initialize(stack_t** s,stack_node_constructor_fn constructor,
                       stack_node_destructor_fn destructor){
     (*s) = mallocx(sizeof(stack_t));
     (*s)->size = 0;
@@ -14,7 +14,7 @@ void initialize_stack(stack_t** s,stack_node_constructor_fn constructor,
 }
 
 /**Destroi pilha**/
-void delete_stack(stack_t** s){
+void stack_delete(stack_t** s){
     while(!stack_empty(*s)){
         stack_pop(*s);
     }

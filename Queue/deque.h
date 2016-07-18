@@ -23,10 +23,10 @@ typedef struct deque_t{
 }deque_t;
 
 /**Inicializa o deque**/
-void initialize_deque(deque_t** d,deque_node_constructor_fn constructor,
+void deque_initialize(deque_t** d,deque_node_constructor_fn constructor,
                       deque_node_destructor_fn destructor);
 /**Deleta o deque**/
-void delete_deque(deque_t** d);
+void deque_delete(deque_t** d);
 /**Insere um elemento no início do deque**/
 void deque_push_front(deque_t* d,void* data);
 /**Insere o elemento no final do deque**/

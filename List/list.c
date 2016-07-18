@@ -2,9 +2,9 @@
 #include "list.h"
 #include "../Utils/alloc.h"
 
+static list_node_t* list_new_node(void* data,list_node_constructor_fn constructor);
 
-
-list_node_t* list_node_new(void* data,list_node_constructor_fn constructor){
+static list_node_t* list_new_node(void* data,list_node_constructor_fn constructor){
     list_node_t* new_node =  mallocx(sizeof(list_node_t));
     new_node->data = constructor(data);
     new_node->next = NULL;
@@ -32,7 +32,7 @@ void list_delete(list_t** l){
 
 void list_insert(list_t* l,void* data,size_t i){
     assert(i<=list_size(l));
-    list_node_t* new_node = list_node_new(data,l->constructor);
+    list_node_t* new_node = list_new_node(data,l->constructor);
     if(list_empty(l)){
         /*Se a lista está vazia, cabeça e cauda apontam para o mesmo lugar*/
         l->head = new_node;
@@ -64,7 +64,7 @@ void list_insert(list_t* l,void* data,size_t i){
 
 /** Insere um elemento na cabeça da lista **/
 void list_prepend(list_t* l,void* data){
-    list_node_t* new_node = list_node_new(data,l->constructor);
+    list_node_t* new_node = list_new_node(data,l->constructor);
     new_node->next = l->head;
     l->head = new_node;
     if(list_empty(l)){
@@ -75,7 +75,7 @@ void list_prepend(list_t* l,void* data){
 
 /**Insere um elemento na cauda da lista **/
 void list_append(list_t* l, void* data){
-    list_node_t* new_node = list_node_new(data,l->constructor);
+    list_node_t* new_node = list_new_node(data,l->constructor);
     if(list_empty(l)){
         l->head = new_node;
     }
@@ -90,7 +90,7 @@ void list_append(list_t* l, void* data){
 void list_remove(list_t* l,size_t i){
     assert(!list_empty(l) && i<list_size(l));
     list_node_t* node;
-    if(list_empty(l)){
+    if(list_size(l)==1){
         /*Remoção em uma lista com um elemento*/
         node = l->head;
         l->head = NULL;

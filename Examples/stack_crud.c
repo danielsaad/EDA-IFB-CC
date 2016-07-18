@@ -58,7 +58,7 @@ int main(void){
     int i;
     stack_t* s;
     pessoa p;
-    initialize_stack(&s,constructor_pessoa,destructor_pessoa);
+    stack_initialize(&s,constructor_pessoa,destructor_pessoa);
     for(i=0;i<5;i++){
         printf("Cadastrando pessoa %d\n",i+1);
         cadastra_pessoa(&p);
@@ -72,6 +72,6 @@ int main(void){
 
         printf("\n");
     }
-    delete_stack(&s);
+    stack_delete(&s);
     return 0;
 }
