@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 #include <time.h>
-#include "../Utils/alloc.h"
+#include "alloc.h"
 int main(void){
 	int l,c;
 	int i,j;

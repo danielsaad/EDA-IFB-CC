@@ -17,24 +17,24 @@ LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/lib)
 MESSAGE(STATUS "Lib files: ${lib_files}")
 
 LIST(APPEND header_list
-	./Sorting/insertion_sort.h
-	./Sorting/sorting.h
-	./Sorting/ordenacao.h
-	./Sorting/heap_sort.h
-	./Sorting/counting_sort.h
-	./Sorting/radix_sort.h
-	./Sorting/bubble_sort.h
-	./Sorting/quick_sort.h
-	./Sorting/merge_sort.h
+	./Ordenacao/insertion_sort.h
+	./Ordenacao/sorting.h
+	./Ordenacao/ordenacao.h
+	./Ordenacao/heap_sort.h
+	./Ordenacao/counting_sort.h
+	./Ordenacao/radix_sort.h
+	./Ordenacao/bubble_sort.h
+	./Ordenacao/quick_sort.h
+	./Ordenacao/merge_sort.h
+	./Lista/list.h
+	./Lista/dlist.h
 	./Utils/alloc.h
+	./Arvore/bst.h
 	./Vector/vector.h
-	./Stack/stack.h
-	./Queue/queue.h
-	./Queue/priority_queue.h
-	./Queue/deque.h
-	./Tree/bst.h
-	./List/list.h
-	./List/dlist.h
+	./Fila/queue.h
+	./Fila/priority_queue.h
+	./Fila/deque.h
+	./Pilha/stack.h
 )
 
 
@@ -45,25 +45,25 @@ endforeach(header ${header_files})
 
 
 #compilação dos arquivos da biblioteca ed1.a
-ADD_LIBRARY(ed1 STATIC ./Sorting/merge_sort.c
-	./Sorting/quick_sort.c
-	./Sorting/bubble_sort.c
-	./Sorting/heap_sort.c
-	./Sorting/counting_sort.c
-	./Sorting/radix_sort.c
-	./Sorting/insertion_sort.c
+ADD_LIBRARY(ed1 STATIC
+	./Ordenacao/merge_sort.c
+	./Ordenacao/quick_sort.c
+	./Ordenacao/bubble_sort.c
+	./Ordenacao/heap_sort.c
+	./Ordenacao/counting_sort.c
+	./Ordenacao/radix_sort.c
+	./Ordenacao/insertion_sort.c
+	./Lista/list.c
+	./Lista/dlist.c
 	./Utils/alloc.c
-	./Array/alocacao_vetor_1.c
-	./Array/alocacao_matriz_1.c
+	./Arvore/bst.c
 	./Vector/vector.c
-	./Stack/stack.c
-	./Queue/queue.c
-	./Queue/priority_queue.c
-	./Queue/deque.c
-	./Tree/bst.c
-	./List/list.c
-	./List/dlist.c)
+	./Fila/queue.c
+	./Fila/priority_queue.c
+	./Fila/deque.c
+	./Pilha/stack.c
+)
 INSTALL(TARGETS ed1 ARCHIVE DESTINATION ${CMAKE_SOURCE_DIR}/lib)
 
 #Compilação dos executáveis
-ADD_SUBDIRECTORY(Examples)
+ADD_SUBDIRECTORY(Exemplos)
