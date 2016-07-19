@@ -177,7 +177,7 @@ END_TEST
 Suite* make_list_suite(void){
     Suite *s;
     TCase *test_cases;
-    s = suite_create("Deque");
+    s = suite_create("List");
     test_cases = tcase_create("Core");
     tcase_add_checked_fixture(test_cases, setup, teardown);
     tcase_add_test(test_cases,test_list_empty);

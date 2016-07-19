@@ -22,6 +22,8 @@ add_executable(teste_main teste_main.c
     teste_priority_queue.c
     teste_deque.c
     teste_list.c
+    teste_dlist.c
+    teste_ordenacao.c
 )
 
 target_link_libraries(teste_main libcheck ed1 m rt)

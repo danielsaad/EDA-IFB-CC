@@ -3,6 +3,7 @@
 #include "../Utils/alloc.h"
 
 static dlist_node_t* dlist_new_node(void* data,dlist_node_constructor_fn constructor);
+static void dlist_delete_node(dlist_node_t* node,dlist_node_destructor_fn destructor);
 
 static dlist_node_t* dlist_new_node(void* data,dlist_node_constructor_fn constructor){
     dlist_node_t* new_node =  mallocx(sizeof(dlist_node_t));
@@ -11,6 +12,13 @@ static dlist_node_t* dlist_new_node(void* data,dlist_node_constructor_fn constru
     new_node->prev = NULL;
     return new_node;
 }
+
+
+static void dlist_delete_node(dlist_node_t* node,dlist_node_destructor_fn destructor){
+    destructor(node->data);
+    free(node);
+}
+
 
 /**Inicializa a lista duplamente encadeada e seus membros**/
 void dlist_initialize(dlist_t** l,dlist_node_constructor_fn constructor,
@@ -55,7 +63,7 @@ void dlist_insert(dlist_t* l,void* data,size_t i){
         /*Inserção no meio da lista*/
         /*Precisamos encontrar o elemento que antecede a posição i*/
         dlist_iterator_t it = l->head;
-        int k;
+        size_t k;
         for(k=0;k<i-1;k++){
             it = it->next;
         }
@@ -71,13 +79,13 @@ void dlist_insert(dlist_t* l,void* data,size_t i){
 /** Insere um elemento na cabeça da dlista **/
 void dlist_prepend(dlist_t* l,void* data){
     dlist_node_t* new_node = dlist_new_node(data,l->constructor);
-    new_node->next = l->head;
     if(dlist_empty(l)){
         l->tail = new_node;
     }
     else{
         l->head->prev = new_node;
     }
+    new_node->next = l->head;
     l->head = new_node;
     l->size++;
 }
@@ -85,13 +93,13 @@ void dlist_prepend(dlist_t* l,void* data){
 /**Insere um elemento na cauda da dlista **/
 void dlist_append(dlist_t* l, void* data){
     dlist_node_t* new_node = dlist_new_node(data,l->constructor);
-    new_node->prev = l->tail;
     if(dlist_empty(l)){
         l->head = new_node;
     }
     else{
         l->tail->next = new_node;
     }
+    new_node->prev = l->tail;
     l->tail = new_node;
     l->size++;
 }
@@ -119,23 +127,22 @@ void dlist_remove(dlist_t* l,size_t i){
     }
     else{
         dlist_iterator_t it = l->head;
-        int k;
-        for(k=0;k<i-1;k++){
+        size_t k;
+        for(k=0;k<i;k++){
             it = it->next;
         }
-        node = it->next;
-        it->next = node->next;
-        node->next->prev = it;
+        node = it;
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
     }
-    l->destructor(node->data);
-    free(node);
+    dlist_delete_node(node,l->destructor);
     l->size--;
 
 }
 
 void dlist_remove_head(dlist_t* l){
     assert(!dlist_empty(l));
-    dlist_iterator_t it = l->head;
+    dlist_iterator_t node = l->head;
     l->head = l->head->next;
     if(dlist_size(l)==1){
         l->tail = NULL;
@@ -143,23 +150,22 @@ void dlist_remove_head(dlist_t* l){
     else{
         l->head->prev = NULL;
     }
-    l->destructor(it->data);
-    free(it);
+    dlist_delete_node(node,l->destructor);
+    l->size--;
 }
 
 void dlist_remove_tail(dlist_t* l){
     assert(!dlist_empty(l));
-    dlist_iterator_t it = l->tail;
+    dlist_iterator_t node = l->tail;
+    l->tail = l->tail->prev;
     if(dlist_size(l)==1){
         l->head = NULL;
-        l->tail = NULL;
     }
     else{
-        l->tail = l->tail->prev;
         l->tail->next = NULL;
     }
-    l->destructor(it->data);
-    free(it);
+    dlist_delete_node(node,l->destructor);
+    l->size--;
 }
 
 void* dlist_access(dlist_t* l,size_t i){
