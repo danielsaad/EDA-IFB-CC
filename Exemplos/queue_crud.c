@@ -58,7 +58,7 @@ int main(void){
     int i;
     queue_t* q;
     pessoa p;
-    initialize_queue(&q,constructor_pessoa,destructor_pessoa);
+    queue_initialize(&q,constructor_pessoa,destructor_pessoa);
     for(i=0;i<5;i++){
         printf("Cadastrando pessoa %d\n",i+1);
         cadastra_pessoa(&p);
@@ -71,6 +71,6 @@ int main(void){
         imprime_pessoa(&p);
         printf("\n");
     }
-    delete_queue(&q);
+    queue_delete(&q);
     return 0;
 }

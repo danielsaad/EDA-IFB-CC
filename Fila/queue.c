@@ -4,7 +4,7 @@
 #include "../Utils/alloc.h"
 
 /**Inicializa a fila**/
-void initialize_queue(queue_t** q,queue_node_constructor_fn constructor,
+void queue_initialize(queue_t** q,queue_node_constructor_fn constructor,
                       queue_node_destructor_fn destructor){
     (*q) = mallocx(sizeof(queue_t));
     (*q)->back = NULL;
@@ -14,7 +14,7 @@ void initialize_queue(queue_t** q,queue_node_constructor_fn constructor,
     (*q)->destructor = destructor;
 }
 
-void delete_queue(queue_t** q){
+void queue_delete(queue_t** q){
     while(!queue_empty(*q)){
         queue_pop(*q);
     }

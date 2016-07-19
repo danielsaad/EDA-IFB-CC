@@ -16,7 +16,11 @@ message(STATUS "Check = ${binary_dir}")
 include_directories(${binary_dir}/src)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-add_executable(teste_main teste_main.c teste_stack.c)
+add_executable(teste_main teste_main.c
+    teste_stack.c
+    teste_queue.c
+    teste_priority_queue.c
+)
 
 target_link_libraries(teste_main libcheck ed1 m rt)
 

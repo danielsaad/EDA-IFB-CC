@@ -26,10 +26,10 @@ typedef struct queue_t{
 
 
 /**Inicializa fila**/
-void initialize_queue(queue_t** q,queue_node_constructor_fn constructor,
+void queue_initialize(queue_t** q,queue_node_constructor_fn constructor,
                       queue_node_destructor_fn destructor);
 /**Destroi fila**/
-void delete_queue(queue_t** q);
+void queue_delete(queue_t** q);
 
 /**Retira o elemento da frente da fila**/
 void queue_pop(queue_t* q);

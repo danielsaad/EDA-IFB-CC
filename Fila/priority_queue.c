@@ -39,15 +39,15 @@ static void priority_queue_heapify_top_down(priority_queue_t* pq,size_t i){
     }
 }
 
-void priority_queue_initialize(priority_queue_t** pq,
-                               priority_queue_element_compare_fn comparator,
+void priority_queue_initialize(priority_queue_t** pq,                               
                                priority_queue_element_constructor_fn constructor,
-                               priority_queue_element_destructor_fn destructor){
+                               priority_queue_element_destructor_fn destructor,
+                               priority_queue_element_compare_fn comparator){
     (*pq) = mallocx(sizeof(priority_queue_t));
     (*pq)->data = NULL;
-    (*pq)->comparator = comparator;
     (*pq)->constructor = constructor;
     (*pq)->destructor = destructor;
+    (*pq)->comparator = comparator;
     (*pq)->size = 0;
     (*pq)->capacity = 0;
 }
