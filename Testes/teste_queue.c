@@ -3,6 +3,11 @@
 #include "queue.h"
 #include "alloc.h"
 
+
+static const int N = 10000;
+
+
+
 static void* int_constructor(void* data){
     void* ptr = mallocx(sizeof(int));
     memcpy(ptr,data,sizeof(int));
@@ -34,15 +39,14 @@ END_TEST
 
 START_TEST(test_queue_crud){
     queue_t* q;
-    const int n = 10000;
-    int* v = callocx(n,sizeof(int));
+    int* v = callocx(N,sizeof(int));
     queue_initialize(&q,int_constructor,int_destructor);
     int i;
-    for(i=0;i<n;i++){
+    for(i=0;i<N;i++){
         v[i] = rand();
         queue_push(q,&v[i]);
     }
-    ck_assert(queue_size(q)==n);
+    ck_assert(queue_size(q)==N);
     for(i=0; !queue_empty(q); i++){
         ck_assert(*(int*) queue_front(q) == v[i]);
         queue_pop(q);

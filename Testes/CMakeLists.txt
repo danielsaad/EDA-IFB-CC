@@ -20,6 +20,8 @@ add_executable(teste_main teste_main.c
     teste_stack.c
     teste_queue.c
     teste_priority_queue.c
+    teste_deque.c
+    teste_list.c
 )
 
 target_link_libraries(teste_main libcheck ed1 m rt)

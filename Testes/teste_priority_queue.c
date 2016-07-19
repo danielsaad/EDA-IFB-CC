@@ -3,6 +3,9 @@
 #include "priority_queue.h"
 #include "alloc.h"
 
+static const int N = 10000;
+
+
 static void* int_constructor(void* data){
     void* ptr = mallocx(sizeof(int));
     memcpy(ptr,data,sizeof(int));
@@ -46,16 +49,15 @@ END_TEST
 
 START_TEST(test_priority_queue_crud){
     priority_queue_t* pq;
-    const int n = 10000;
-    int* v = callocx(n,sizeof(int));
+    int* v = callocx(N,sizeof(int));
     priority_queue_initialize(&pq,int_constructor,int_destructor,int_comparator);
     int i;
-    for(i=0;i<n;i++){
+    for(i=0;i<N;i++){
         v[i] = rand();
         priority_queue_push(pq,&v[i]);
     }
-    qsort(v,n,sizeof(int),int_comparator);
-    ck_assert(priority_queue_size(pq)==n);
+    qsort(v,N,sizeof(int),int_comparator);
+    ck_assert(priority_queue_size(pq)==N);
     for(i=0; !priority_queue_empty(pq); i++){
         ck_assert(*(int*) priority_queue_front(pq) == v[i]);
         priority_queue_pop(pq);

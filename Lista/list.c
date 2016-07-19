@@ -3,12 +3,18 @@
 #include "../Utils/alloc.h"
 
 static list_node_t* list_new_node(void* data,list_node_constructor_fn constructor);
+static void list_delete_node(list_node_t* n,list_node_destructor_fn);
 
 static list_node_t* list_new_node(void* data,list_node_constructor_fn constructor){
     list_node_t* new_node =  mallocx(sizeof(list_node_t));
     new_node->data = constructor(data);
     new_node->next = NULL;
     return new_node;
+}
+
+static void list_delete_node(list_node_t* n,list_node_destructor_fn destructor){
+    destructor(n->data);
+    free(n);
 }
 
 /**Inicializa a Lista e seus membros**/
@@ -104,66 +110,64 @@ void list_remove(list_t* l,size_t i){
     else if(i==list_size(l)-1){
         node = l->tail;
         list_iterator_t it = l->head;
-        while(it->next!=NULL){
+        while(it->next!=l->tail){
             it = it->next;
         }
+        it->next = NULL;
         l->tail = it;
-        l->tail->next = NULL;
     }
     else{
         list_iterator_t it = l->head;
-        int k;
+        size_t k;
         for(k=0;k<i-1;k++){
             it = it->next;
         }
         node = it->next;
         it->next = node->next;
     }
-    l->destructor(node->data);
-    free(node);
+    list_delete_node(node,l->destructor);
     l->size--;
 
 }
 
 void list_remove_head(list_t* l){
     assert(!list_empty(l));
-    list_iterator_t it = l->head;
+    list_iterator_t node = l->head;
     if(list_size(l)==1){
-        l->head = NULL;
         l->tail = NULL;
     }
-    else{
-        l->head = l->head->next;
-    }
-    l->destructor(it->data);
-    free(it);
+    l->head = l->head->next;
+    list_delete_node(node,l->destructor);
+    l->size--;
 }
 
 void list_remove_tail(list_t* l){
     assert(list_size(l)>0);
+    list_iterator_t node = l->tail;
     if(list_size(l)==1){
-        l->destructor(l->tail->data);
-        free(l->tail);
         l->head = NULL;
         l->tail = NULL;
     }
     else{
         list_iterator_t it = l->head;
-        while(it->next!=NULL){
+        while(it->next!=l->tail){
             it = it->next;
         }
         it->next = NULL;
-        l->destructor(l->tail->data);
-        free(l->tail);
         l->tail = it;
     }
+    list_delete_node(node,l->destructor);
+    l->size--;
 }
 
 void* list_access(list_t* l,size_t i){
-    assert(list_size(l)>0 && i<list_size(l));
+    assert(!list_empty(l) && i<list_size(l));
+    if(i==0){
+        return(list_access_head(l));
+    }
+    size_t j;
     list_iterator_t it = l->head;
-    int j;
-    for(j=0;j<i-1;j++){
+    for(j=0;j<i;j++){
         it = it->next;
     }
     return(it->data);

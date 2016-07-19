@@ -3,6 +3,11 @@
 #include "stack.h"
 #include "alloc.h"
 
+
+static const int N = 10000;
+
+
+
 static void* int_constructor(void* data){
     void* ptr = mallocx(sizeof(int));
     memcpy(ptr,data,sizeof(int));
@@ -33,16 +38,15 @@ END_TEST
 
 START_TEST(test_stack_crud){
     stack_t* s;
-    const int n = 10000;
-    int* v = callocx(n,sizeof(int));
+    int* v = callocx(N,sizeof(int));
     stack_initialize(&s,int_constructor,int_destructor);
     int i;
-    for(i=0;i<n;i++){
+    for(i=0;i<N;i++){
         v[i] = rand();
         stack_push(s,&v[i]);
     }
-    ck_assert(stack_size(s)==n);
-    for(i=n-1; !stack_empty(s) ;i--){
+    ck_assert(stack_size(s)==N);
+    for(i=N-1; !stack_empty(s) ;i--){
         ck_assert(*(int*) stack_top(s) == v[i]);
         stack_pop(s);
     }
