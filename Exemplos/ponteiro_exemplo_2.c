@@ -1,5 +1,7 @@
 /**
- * ponteiros2.cpp
+ * Autor: Daniel Saad Nogueira Nunes
+ * Comentários: Este programa aborda conceitos
+ * básicos sobre ponteiros
 **/
 #include <stdio.h>
 

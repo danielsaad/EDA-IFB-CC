@@ -1,6 +1,9 @@
 /**
- * ponteiro-vetor.c
- **/
+ * Autor: Daniel Saad Nogueira Nunes
+ * Comentários: Neste programa é ilustrado o fato
+ * de que vetores podem ser vistos como ponteiros,
+ * e vice-versa através da aritmética de ponteiros
+**/
 
 #include <stdio.h>
 

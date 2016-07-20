@@ -1,10 +1,14 @@
 /**
- * passagem-por-referencia2.c
- **/
+ * Autor: Daniel Saad Nogueira Nunes
+ * Comentários: Neste programa é explorada
+ * a emulação de passagem por referência em funções na
+ * linguagem C.
+**/
+
 
 #include <stdio.h>
 
-/** Em C, vetores sempre são passados por referência **/
+/* Em C, vetores sempre são passados por referência. Por que? */
  
 void soma(int x[],int n){
 	int i;

@@ -1,14 +1,14 @@
-
 /**
- * passagem-por-referencia.c
- **/
+ * Autor: Daniel Saad Nogueira Nunes
+ * Comentários: Neste programa é explorada
+ * a emulação de passagem por referência em funções na
+ * linguagem C.
+**/
 
 #include <stdio.h>
 
-/** Em C, podemos emular uma passagem por referência através de
- * ponteiros. **/
-
-/**
+/* Em C, podemos emular uma passagem por referência através de
+ * ponteiros.
  * Neste caso, uma cópia do ponteiro que aponta para o endereço de x
  * é criada. Como a cópia aponta para o endereço de x, podemos modificar 
  * o conteúdo da região de memória apontada por x. **/

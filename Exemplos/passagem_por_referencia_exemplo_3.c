@@ -1,10 +1,14 @@
 /**
- * passagem-por-referencia3.c
- **/
-
+ * Autor: Daniel Saad Nogueira Nunes
+ * Comentários: Neste programa é explorada
+ * a emulação de passagem por referência em funções na
+ * linguagem C.
+**/
 #include <stdio.h>
 
-/** Em C, vetores sempre são passados por referência **/
+/* Em C, vetores sempre são passados por referência. Pois um vetor nada
+ * nada mais é do que um nome para uma posição de memória. Um ponteiro
+ * constante! */
  
 void soma(int* x,int n){
 	int i;
