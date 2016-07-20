@@ -25,6 +25,7 @@ add_executable(teste_main teste_main.c
     teste_dlist.c
     teste_ordenacao.c
     teste_bst.c
+    teste_avl_tree.c
 )
 
 target_link_libraries(teste_main libcheck ed1 m rt)

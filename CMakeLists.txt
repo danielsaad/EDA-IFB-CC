@@ -27,7 +27,8 @@ LIST(APPEND header_list
 	./Lista/list.h
 	./Lista/dlist.h
 	./Utils/alloc.h
-	./Arvore/bst.h
+        ./Arvore/bst.h
+        ./Arvore/avl_tree.h
 	./Vector/vector.h
 	./Fila/queue.h
 	./Fila/priority_queue.h
@@ -55,6 +56,7 @@ ADD_LIBRARY(ed1 STATIC
 	./Lista/dlist.c
 	./Utils/alloc.c
 	./Arvore/bst.c
+        ./Arvore/avl_tree.c
 	./Vector/vector.c
 	./Fila/queue.c
 	./Fila/priority_queue.c
