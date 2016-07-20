@@ -9,6 +9,14 @@ static void bst_delete_helper(bst_node_t* v,bst_element_destructor_fn destructor
 static int bst_find_helper(bst_node_t* v,void *data,bst_element_compare_fn comparator);
 static bst_node_t* bst_remove_helper(bst_node_t* v,void *data,bst_element_compare_fn comparator,bst_element_destructor_fn destructor);
 static bst_node_t* bst_find_rightmost(bst_node_t* v);
+bst_node_t* bst_new_node(void* data,bst_element_constructor_fn constructor);
+void bst_delete_node(bst_node_t* node,bst_element_destructor_fn destructor);
+
+void bst_delete_node(bst_node_t* node,bst_element_destructor_fn destructor){
+    destructor(node->data);
+    free(node);
+}
+
 
 static bst_node_t* bst_find_rightmost(bst_node_t* v){
     if(v==NULL || v->right==NULL){
@@ -49,14 +57,12 @@ static bst_node_t* bst_remove_helper(bst_node_t* v,void* data, bst_element_compa
             /*caso 1 e caso 2, o nó é uma folha ou só tem um filho. Solução: transplantar*/
             if(v->left==NULL){
                 bst_node_t* tmp = v->right;
-                destructor(v->data);
-                free(v);
+                bst_delete_node(v,destructor);
                 return tmp;
             }
             else if(v->right==NULL){
                 bst_node_t* tmp = v->left;
-                destructor(v->data);
-                free(v);
+                bst_delete_node(v,destructor);
                 return tmp;
             }
             /*caso 3, o nó tem dois filhos: achar o nó imediatamente acima do que queremos deletar
@@ -64,8 +70,10 @@ static bst_node_t* bst_remove_helper(bst_node_t* v,void* data, bst_element_compa
             Solução: colocar o valor da folha no lugar que estamos e proceder a deletar a folha*/
             else{
                 bst_node_t* tmp = bst_find_rightmost(v->left);
+                void* swap = v->data;
                 v->data = tmp->data;
-                v->left = bst_remove_helper(v->left,v->data,comparator,destructor);
+                tmp->data = swap;
+                v->left = bst_remove_helper(v->left,tmp->data,comparator,destructor);
             }
         }
         return v;

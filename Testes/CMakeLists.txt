@@ -24,8 +24,10 @@ add_executable(teste_main teste_main.c
     teste_list.c
     teste_dlist.c
     teste_ordenacao.c
+    teste_bst.c
 )
 
 target_link_libraries(teste_main libcheck ed1 m rt)
 
 install(TARGETS teste_main RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin)
+
