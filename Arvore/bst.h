@@ -16,7 +16,7 @@ typedef struct bst_node_t{
 
 
 typedef struct bst_t{
-    struct bst_node_t* root;
+    bst_node_t* root;
     bst_element_constructor_fn constructor;
     bst_element_destructor_fn destructor;
     avl_tree_element_compare_fn comparator;
