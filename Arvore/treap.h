@@ -8,7 +8,7 @@ typedef int (*treap_tree_element_compare_fn)(const void*,const void*);
 
 
 typedef struct treap_node_t{
-    size_t rnd;
+    size_t priority;
     void* data;
     struct treap_node_t* left;
     struct treap_node_t* right;

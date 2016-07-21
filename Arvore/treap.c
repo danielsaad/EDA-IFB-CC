@@ -1,7 +1,17 @@
 #include <limits.h>
+#include <time.h>
+#include <assert.h>
 #include "treap.h"
-#include "Utils/alloc.h"
+#include "../Utils/alloc.h"
 
+static treap_node_t* treap_new_node(void* data,treap_element_constructor_fn constructor);
+static void treap_delete_node(treap_node_t* v,treap_element_destructor_fn destructor);
+static void treap_delete_helper(treap_t* t,treap_node_t* v);
+static treap_node_t* treap_left_rotate(treap_node_t* x);
+static treap_node_t* treap_right_rotate(treap_node_t* y);
+static treap_node_t* treap_insert_helper(treap_t* t,treap_node_t* v,void* data);
+static treap_node_t* treap_remove_helper(treap_t* t,treap_node_t* v,void* data);
+static int treap_find_helper(treap_t* t,treap_node_t* v,void* data);
 
 void treap_initialize(treap_t** t,treap_element_constructor_fn constructor,
                       treap_element_destructor_fn destructor,
@@ -14,17 +24,18 @@ void treap_initialize(treap_t** t,treap_element_constructor_fn constructor,
     (*t)->comparator = comparator;
 }
 
-treap_node_t* treap_new_node(void* data,treap_element_constructor_fn constructor){
+static treap_node_t* treap_new_node(void* data,treap_element_constructor_fn constructor){
     treap_node_t* new_node = mallocx(sizeof(treap_node_t));
     new_node->data = constructor(data);
     new_node->left = NULL;
     new_node->right = NULL;
-    new_node->rnd = rnd();
-    new_node->rnd = new_node->rnd == 0 ? 1 : new_node->rnd;
+    new_node->priority = rand();
+    new_node->priority = new_node->priority == 0 ? 1 : new_node->priority;
+    srand(time(NULL));
     return new_node;
 }
 
-void treap_delete_node(treap_node_t* v,treap_element_destructor_fn destructor){
+static void treap_delete_node(treap_node_t* v,treap_element_destructor_fn destructor){
     destructor(v->data);
     free(v);
 }
@@ -33,10 +44,10 @@ void treap_delete(treap_t** t){
     treap_delete_helper((*t),(*t)->root);
 }
 
-void treap_delete_helper(treap_t* t,treap_node_t* v){
+static void treap_delete_helper(treap_t* t,treap_node_t* v){
     if(v!=NULL){
-        treap_delete_helper(v->left);
-        treap_delete_helper(v->right);
+        treap_delete_helper(t,v->left);
+        treap_delete_helper(t,v->right);
         treap_delete_node(v,t->destructor);
     }
 }
@@ -80,36 +91,25 @@ static treap_node_t* treap_right_rotate(treap_node_t* y){
 
 
 
-void treap_insert(treap_t*,void* data){
+void treap_insert(treap_t* t,void* data){
     t->root = treap_insert_helper(t,t->root,data);
 }
 
-void treap_insert_helper(treap_t* t,treap_node_t* v,void* data){
+static treap_node_t* treap_insert_helper(treap_t* t,treap_node_t* v,void* data){
     if(v==NULL){
-        return treap_new_node(data,t->constructor);
+        v = treap_new_node(data,t->constructor);
     }
     else if(t->comparator(data,v->data)<0){
         v->left = treap_insert_helper(t,v->left,data);
+        if(v->left->priority > v->priority){
+            v = treap_right_rotate(v);
+        }
     }
     else{
         v->right = treap_insert_helper(t,v->right,data);
-    }
-
-    size_t largest_rnd = v->rnd;
-    treap_node_t* largest_node = v;
-    if(v->left!=NULL && v->left->rnd > largest_rnd_){
-        largest_rnd = v->left->rnd;
-        largest_node = v->left;
-    }
-    if(v->right!=NULL && v->right->rnd > largest_rnd){
-        largest_rnd = v->right->rnd;
-        largest_node = v->right;
-    }
-    if(largest_node==v->left){
-        return treap_rotate_right(v);
-    }
-    else if(largest_node==v->right){
-        return treap_rotate_left(v);
+        if(v->right->priority > v->priority){
+            v = treap_left_rotate(v);
+        }
     }
     return v;
 
@@ -119,29 +119,7 @@ void treap_remove(treap_t* t,void* data){
     t->root = treap_remove_helper(t,t->root,data);
 }
 
-treap_node_t treap_restore_property(treap_node_t* v){
-    size_t largest_rnd =  v->rnd;
-    treap_node_t* largest_node = v;
-    if(v->left!=NULL && v->left->rnd > largest_rnd){
-        largest_rnd = v->left->rnd;
-        largest_node = v->left;
-    }
-    if(v->right!=NULL && v->right->rnd > largest_rnd){
-        largest_rnd = v->right->rnd;
-        largest_node = v->right;
-    }
-    if(largest_node==v->left){
-        treap_right_rotate(v);
-        return(treap_restore_property(v->right));
-    }
-    else if(largest_node==v->right){
-        treap_left_rotate(v);
-        return(treap_restore_property(v->left));
-    }
-    return v;
-}
-
-treap_node_t* treap_remove_helper(treap_t* t,treap_node_t* v,void* data){
+static treap_node_t* treap_remove_helper(treap_t* t,treap_node_t* v,void* data){
     if(v==NULL){
         return v;
     }
@@ -152,19 +130,35 @@ treap_node_t* treap_remove_helper(treap_t* t,treap_node_t* v,void* data){
         v->right = treap_remove_helper(t,v->right,data);
     }
     else{
-        v->rnd = 0;
-        v = restore_treap_property(v);
-        treap_delete_node(v);
-        v = NULL;
+        if(v->left==NULL){
+            treap_node_t* tmp = v->right;
+            treap_delete_node(v,t->destructor);
+            v = tmp;
+        }
+        else if(v->right==NULL){
+            treap_node_t* tmp = v->left;
+            treap_delete_node(v,t->destructor);
+            v = tmp;
+        }
+        else{
+            if(v->left->priority < v->right->priority){
+                v = treap_left_rotate(v);
+                v->left = treap_remove_helper(t,v->left,data);
+            }
+            else{
+                v = treap_right_rotate(v);
+                v->right = treap_remove_helper(t,v->right,data);
+            }
+        }
     }
     return v;
 }
 
-int treap_find(treap_t*,void* data){
+int treap_find(treap_t* t,void* data){
     return treap_find_helper(t,t->root,data);
 }
 
-treap_node_t* treap_find_helper(treap_t* t,treap_node_t* v,void* data){
+static int treap_find_helper(treap_t* t,treap_node_t* v,void* data){
     if(v==NULL){
         return 0;
     }
