@@ -23,9 +23,19 @@ static int avl_node_get_balance(avl_node_t* v);
 static avl_node_t* avl_left_rotate(avl_node_t* x);
 
 
-static avl_node_t* avl_right_roate(avl_node_t* x);
+static avl_node_t* avl_right_rotate(avl_node_t* x);
 
 static size_t avl_calculate_height(avl_node_t* v);
+
+static avl_node_t* avl_tree_find_rightmost(avl_node_t* v){
+    if(v==NULL || v->right==NULL){
+        return v;
+    }
+    else{
+        return avl_tree_find_rightmost(v->right);
+    }
+}
+
 
 static size_t avl_calculate_height(avl_node_t* v){
     size_t hl,hr;
@@ -176,6 +186,59 @@ void avl_tree_remove(avl_tree_t* t,void* data){
 }
 
 avl_node_t* avl_tree_remove_helper(avl_tree_t* t,avl_node_t* v,void* data){
+    if(v==NULL){
+        return v;
+    }
+    else if(t->comparator(data,v->data)<0){
+        v->left = avl_tree_remove_helper(t,v->left,data);
+    }
+    else if(t->comparator(data,v->data)>0){
+        v->right =  avl_tree_remove_helper(t,v->right,data);
+    }
+    else{ /*remoção do nó*/
+        /*caso 1 e caso 2, o nó é uma folha ou só tem um filho. Solução: transplantar*/
+        if(v->left==NULL){
+            avl_node_t* tmp = v->right;
+            avl_tree_delete_node(v,t->destructor);
+            t->size--;
+            return tmp;
+        }
+        else if(v->right==NULL){
+            avl_node_t* tmp = v->left;
+            avl_tree_delete_node(v,t->destructor);
+            t->size--;
+            return tmp;
+        }
+        /*caso 3, o nó tem dois filhos: achar o nó imediatamente acima do que queremos deletar
+            obrigatoriamente este nó é uma folha.
+            Solução: colocar o valor da folha no lugar que estamos e proceder a deletar a folha*/
+        else{
+            avl_node_t* tmp = avl_tree_find_rightmost(v->left);
+            void* swap = v->data;
+            v->data = tmp->data;
+            tmp->data = swap;
+            v->left = avl_tree_remove_helper(t,v->left,tmp->data);
+        }
+    }
+    if(v==NULL){
+        return NULL;
+    }
+    v->height = avl_calculate_height(v);
+    int balance = avl_node_get_balance(v);
+    if(balance>1 && avl_node_get_balance(v->left)>=0){
+        return avl_right_rotate(v);
+    }
+    if(balance>1 && avl_node_get_balance(v->left)<0){
+        v->left = avl_left_rotate(v->left);
+        return avl_right_rotate(v);
+    }
+    if(balance<-1 && avl_node_get_balance(v->right)<=0){
+        return avl_left_rotate(v);
+    }
+    if(balance<-1 && avl_node_get_balance(v->right)>0){
+        v->right = avl_right_rotate(v->right);
+        return avl_left_rotate(v);
+    }
     return v;
 }
 
