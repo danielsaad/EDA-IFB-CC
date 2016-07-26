@@ -7,7 +7,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "alloc.h"
 
 int main(void){
 
@@ -15,7 +14,6 @@ int main(void){
      * de memória arbitrária.
      * É necessário atribuir a eles uma posição de memória válida
      * que pertença ao seu programa. */
-
     int* ptr;
 
     /* Podemos requisitar ao sistema operacional que ele aloque
@@ -24,13 +22,15 @@ int main(void){
 
     /*A função malloc é responsável por fazer essa requisição ao
      * sistema operacional */
-
-    ptr = mallocx(sizeof(int));
+    ptr = malloc(sizeof(int));
+    if(ptr==NULL){
+        printf("Erro de alocação.\n");
+    }
 
     /*Dessa forma, ponteiros podem apontar para posições
       de memória alocadas pelo sistema operaconal*/
 
-	*ptr = 3; //modificamos o conteúdo da memória alocada e apontada por ptr
+    *ptr = 3; //modificamos o conteúdo da memória alocada e apontada por ptr
 
     printf("Valor do conteúdo de ptr = %p\n",ptr);
     printf("Valor do conteúdo apontado por ptr = %d\n",*ptr);
@@ -38,7 +38,7 @@ int main(void){
     /* O espaço alocado é liberado */
     free (ptr);
 
-	return 0;
+    return 0;
 
 }
 

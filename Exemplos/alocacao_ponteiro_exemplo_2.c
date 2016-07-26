@@ -7,31 +7,34 @@
 
 
 #include <stdlib.h>
-#include "alloc.h"
-
+#include <stdio.h>
 typedef struct ExemploStruct{
 	int a,b,c;
 }ExemploStruct;
 
 int main(void){
-    ExemploStruct* estrutura_ptr;
+    ExemploStruct* ptr_estrutura;
 
     /* Aloca dinamicamente uma estrutura e passa o endereco inicial
      * da estrutura para o ponteiro */
-    estrutura_ptr = mallocx(sizeof(ExemploStruct));
+    ptr_estrutura = malloc(sizeof(ExemploStruct));
+    if(ptr_estrutura==NULL){
+        printf("Erro de alocação.\n");
+        exit(EXIT_FAILURE);
+    }
 	
     /* O acesso em membros de estruturas apontadas por
      * ponteiros é feito através do operador seta.
      * Em resumo: (*estrutura_ptr).a é equivalente a
      * estrutura_ptr->a. Preferimos a segunda forma por ser
      * mais legível */
-    estrutura_ptr->a=3;
-    estrutura_ptr->b=4;
-    estrutura_ptr->c=5;
+    ptr_estrutura->a=3;
+    ptr_estrutura->b=4;
+    ptr_estrutura->c=5;
 				  
     /* Liberação do espaço alocado */
-    free (estrutura_ptr);
+    free (ptr_estrutura);
 
-	return(0);
+    return(0);
 	
 }

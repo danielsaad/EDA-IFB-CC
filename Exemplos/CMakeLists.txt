@@ -11,6 +11,7 @@ LIST(APPEND src_list
 	./alocacao_ponteiro_exemplo_2.c
 	./priority_queue_crud.c
 	./ponteiro_vetor_exemplo_1.c
+        ./ponteiro_vetor_exemplo_2.c
 	./passagem_por_referencia_exemplo_2.c
 	./stack_crud.c
 	./funcoes_exemplo_1.c
@@ -24,6 +25,8 @@ LIST(APPEND src_list
 	./deque_crud.c
 	./passagem_por_referencia_exemplo_1.c
 	./alocacao_matrix_exemplo_1.c
+    ./ponteiro_para_funcao_exemplo_1.c
+    ./ponteiro_para_funcao_exemplo_2.c
 )
 
 foreach(src ${src_list})
