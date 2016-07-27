@@ -18,8 +18,8 @@ int main(void){
 
     /* MEMORY LEAK: atribui um novo endereço de memória para ptr
      * sem desalocar o bloco de memória alocado */
-	ptr = NULL; 
-	return(0);
+    ptr = NULL;
+    return(0);
 }
 
 

@@ -25,8 +25,10 @@ LIST(APPEND src_list
 	./deque_crud.c
 	./passagem_por_referencia_exemplo_1.c
 	./alocacao_matrix_exemplo_1.c
-    ./ponteiro_para_funcao_exemplo_1.c
-    ./ponteiro_para_funcao_exemplo_2.c
+        ./wild_pointer_exemplo_1.c
+        ./wild_pointer_exemplo_2.c
+        ./ponteiro_para_funcao_exemplo_1.c
+        ./ponteiro_para_funcao_exemplo_2.c
 )
 
 foreach(src ${src_list})

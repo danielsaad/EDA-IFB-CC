@@ -14,6 +14,8 @@ add_dependencies(libcheck check)
 message(STATUS "Check = ${binary_dir}")
 
 include_directories(${binary_dir}/src)
+include_directories(${binary_dir})
+
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 add_executable(teste_main teste_main.c
