@@ -12,9 +12,9 @@ int main(void){
     /* libera-se a área de memória alocada */
     free (ptr);
     /* agora podemos mudar o valor de ptr */
-	ptr = NULL;
-			 
-	return(0);
+    ptr = NULL;
+
+    return(0);
 }
 
 
