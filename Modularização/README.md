@@ -7,6 +7,6 @@ e depois ligá-los.
 
 Para compilar faça:
 ```shell
-	gcc -c quadrado.c triangulo.c main.c
+	gcc -c -Wall quadrado.c triangulo.c main.c
 	gcc main.o quadrado.o triangulo.o -o main -lm
 ```
