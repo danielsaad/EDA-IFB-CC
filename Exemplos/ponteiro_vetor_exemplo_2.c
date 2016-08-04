@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 int main(void){
-    char s[] = {'a','b','r','a'};
+    char s[] = {'a','b','r','a','\0'};
     int v[] = {0,1,2,3};
     char* ptr_s = s;
     int* ptr_v = v;
