@@ -8,8 +8,8 @@ int main(void){
 	while(troco>0){
 		/* Utilizamos a moeda de um real */
 		if(troco>=100){
-			troco-=100;
-			nro_moedas++;
+			nro_moedas = troco/100;
+			troco= troco%100;
 		}
 		else if(troco>=50){
 			troco-=50;
