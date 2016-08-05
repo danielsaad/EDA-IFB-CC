@@ -8,6 +8,7 @@ int* intersecao(int* v1,int* v2,int n,int m,int* tam){
 	int* v3 = malloc(sizeof(int)*k);
 	if(v3==NULL){
 		printf("Erro na alocação.\n");
+		exit(EXIT_FAILURE);
 	}
 	int igual;
 	for(i=0;i<n;i++){
