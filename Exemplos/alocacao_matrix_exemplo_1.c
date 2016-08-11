@@ -28,7 +28,7 @@ int main(void){
     }
     /* O ponteiro zero recebe o espaço da matriz
      * isto é, l*c */
-    m[0] = callocx(l*c,sizeof(int));
+    m[0] = calloc(l*c,sizeof(int));
     if(m[0]==NULL){
         printf("Erro na alocação.\n");
         exit(EXIT_FAILURE);
