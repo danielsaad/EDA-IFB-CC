@@ -20,8 +20,14 @@ int busca_binaria(int* v,int n,int chave){
 }
 
 int main(void){
-    int chave = 3;
+    int chave = 11;
     int v[9] = {0,2,4,5,7,8,9,11,13};
     int pos = busca_binaria(v,9,chave);
-    printf("Chave %d ocorre na posição %d.\n",chave,pos);
+    if(pos==-1){
+        printf("Chave %d não ocorre no vetor.\n",chave);
+    }
+    else{
+        printf("Chave %d ocorre na posição %d.\n",chave,pos);
+    }
+    return 0;
 }
