@@ -30,6 +30,8 @@ LIST(APPEND src_list
         ./ponteiro_para_funcao_exemplo_1.c
         ./ponteiro_para_funcao_exemplo_2.c
         ./qsort_bsearch_exemplo.c
+        ./busca_binaria_exemplo.c
+        ./busca_binaria_recursiva_exemplo.c
 )
 
 foreach(src ${src_list})
