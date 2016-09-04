@@ -5,6 +5,7 @@ int main(void){
     SRunner *sr;
     sr = srunner_create(make_triangulo_suite());
     srunner_add_suite(sr,make_quadrado_suite());
+    srunner_add_suite(sr,make_retangulo_suite());
     /* Importante para debug */
     srunner_set_fork_status(sr, CK_NOFORK);
     /* Importante para mostrar informações na tela */
