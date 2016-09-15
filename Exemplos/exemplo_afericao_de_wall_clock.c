@@ -11,6 +11,7 @@ int main(){
   f();
   gettimeofday(&end, NULL);
   printf("Tempo = %ld microssegundos\n",
-    (end.tv_sec-start.tv_sec)*1000000 + (end.tv_usec-start.tv_usec));
+    (end.tv_sec-start.tv_sec)*1000000 +
+    (end.tv_usec-start.tv_usec));
   return 0;
 }
