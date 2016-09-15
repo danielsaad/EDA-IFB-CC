@@ -4,11 +4,29 @@
 #include "alloc.h"
 
 
-void* constructor_int(void* data){
-    void* ptr = mallocx(sizeof(int));
-    memcpy(ptr,data,sizeof(int));
+
+typedef struct pessoa{
+  char nome[30];
+  char cpf[30];
+  int idade;
+}pessoa;
+
+void* constructor_pessoa(void* data){
+    void* ptr = mallocx(sizeof(pessoa));
+    memcpy(ptr,data,sizeof(pessoa));
     return ptr;
 }
+
+void destructor_pessoa(void* data){
+  free(data);
+}
+
+
+ void* constructor_int(void* data){
+     void* ptr = mallocx(sizeof(int));
+     memcpy(ptr,data,sizeof(int));
+     return ptr;
+ }
 
 void destructor_int(void* data){
     free(data);

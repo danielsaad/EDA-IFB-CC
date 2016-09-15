@@ -51,6 +51,7 @@ void list_insert(list_t* l,void* data,size_t i){
     }
     else if(i==list_size(l)){
         /*Inserção na cauda*/
+        l->tail->next = new_node;
         l->tail = new_node;
     }
     else{
@@ -164,6 +165,9 @@ void* list_access(list_t* l,size_t i){
     assert(!list_empty(l) && i<list_size(l));
     if(i==0){
         return(list_access_head(l));
+    }
+    else if(i==list_size(l)-1){
+        return(list_access_tail(l));
     }
     size_t j;
     list_iterator_t it = l->head;

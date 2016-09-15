@@ -32,6 +32,7 @@ LIST(APPEND src_list
         ./qsort_bsearch_exemplo.c
         ./busca_binaria_exemplo.c
         ./busca_binaria_recursiva_exemplo.c
+    ./exemplo_fila_cantina.c
 )
 
 foreach(src ${src_list})

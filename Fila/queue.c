@@ -49,12 +49,11 @@ void queue_push(queue_t* q,void* data){
     new_node->next = NULL;
     if(queue_size(q)==0){
         q->front = new_node;
-        q->back = new_node;
     }
     else{
         q->back->next = new_node;
-        q->back = new_node;
     }
+    q->back = new_node;
     q->size++;
 }
 
