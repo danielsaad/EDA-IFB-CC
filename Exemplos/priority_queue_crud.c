@@ -17,7 +17,7 @@ void int_destructor(void* data){
 
 
 int int_comparator(const void* a,const void *b){
-    if(*(int*)a > *(int*)b){
+    if(*(int*)a < *(int*)b){
         return -1;
     }
     else if( *(int*)a == *(int*)b){
@@ -30,7 +30,7 @@ int int_comparator(const void* a,const void *b){
 int main(void){
     srand(time(NULL));
     priority_queue_t* pq;
-    priority_queue_initialize(&pq,int_comparator,int_constructor,int_destructor);
+    priority_queue_initialize(&pq,int_constructor,int_destructor,int_comparator);
     int i;
     for(i=0;i<1000;i++){
         int value = rand()%10000;
