@@ -26,6 +26,12 @@ typedef struct list_node_t{
  */
 typedef list_node_t* list_iterator_t;
 
+
+/**
+  @brief list_t Definidção do tipo lista. Contém ponteiros para a cabeça e cauda
+  da lista, as funções construtoras e destrutoras dos elementos das listas e
+  o tamanho da lista.
+**/
 typedef struct list_t{
     list_node_t* head; /*Cabeça da Lista*/
     list_node_t* tail; /*Cauda da Lista*/

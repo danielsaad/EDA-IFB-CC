@@ -111,12 +111,17 @@ void* deque_back(deque_t* d);
 
 
 /**
- * @brief deque_size Retorna o tamanho do deque.
+ * @brief deque_size Indica o tamanho do deque.
  * @param d Deque.
  * @return Tamanho do deque.
  */
 size_t deque_size(deque_t* d);
-/**Retorna se o deque está vazio ou não**/
+
+/**
+ * @brief deque_empty Verifica se o deque está vazio.
+ * @param d Deque.
+ * @return Verdadeiro(1) se o Deque está vazio e Falso(0), caso contrário.
+ */
 size_t deque_empty(deque_t* d);
 
 
