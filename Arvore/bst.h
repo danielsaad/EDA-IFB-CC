@@ -5,7 +5,7 @@
 
 typedef void* (*bst_element_constructor_fn) (void*);
 typedef void (*bst_element_destructor_fn)(void *);
-typedef int (*avl_tree_element_compare_fn)(const void*,const void*);
+typedef int (*bst_tree_element_compare_fn)(const void*,const void*);
 
 
 typedef struct bst_node_t{
@@ -19,14 +19,14 @@ typedef struct bst_t{
     bst_node_t* root;
     bst_element_constructor_fn constructor;
     bst_element_destructor_fn destructor;
-    avl_tree_element_compare_fn comparator;
+    bst_tree_element_compare_fn comparator;
     size_t size;
 }bst_t;
 
 void bst_initialize(bst_t** t,
                     bst_element_constructor_fn constructor,
                     bst_element_destructor_fn destructor,
-                    avl_tree_element_compare_fn comparator);
+                    bst_tree_element_compare_fn comparator);
 
 void bst_delete(bst_t**);
 

@@ -34,7 +34,7 @@ static bst_node_t* bst_new_node(void* data,bst_element_constructor_fn constructo
 void bst_initialize(bst_t** t,
                     bst_element_constructor_fn constructor,
                     bst_element_destructor_fn destructor,
-                    avl_tree_element_compare_fn comparator){
+                    bst_tree_element_compare_fn comparator){
     (*t) = mallocx(sizeof(bst_t));
     (*t)->root = NULL;
     (*t)->size = 0;
