@@ -116,9 +116,8 @@ static bst_node_t* bst_remove_helper(bst_t* t, bst_node_t* v,void* data){
             t->size--;
             return tmp;
         }
-        /*caso 3, o nó tem dois filhos: achar o nó imediatamente acima do que queremos deletar
-            obrigatoriamente este nó é uma folha.
-            Solução: colocar o valor da folha no lugar que estamos e proceder a deletar a folha*/
+        /*caso 3, o nó tem dois filhos: achar o nó sucessor do que queremos
+        deletar e realizar o swap. Obrigatoriamente este nó cai no caso 1 ou caso 2.*/
         else{
             bst_node_t* tmp = bst_find_rightmost(v->left);
             void* swap = v->data;
