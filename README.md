@@ -1,5 +1,5 @@
 # Estruturas de Dados e Algoritmos
-Material auxiliar pra Disciplina de Estruturas de Dados e Algoritmos do curso de bacharelado em Ciência da Computação do IFB-Taguatinga.
+Material auxiliar pra disciplina de Estruturas de Dados e Algoritmos do curso de Ciência da Computação do IFB-Taguatinga.
 
 ## Compilação para Linux
 
@@ -7,6 +7,7 @@ Material auxiliar pra Disciplina de Estruturas de Dados e Algoritmos do curso de
 Para compilar os executáveis e a biblioteca você deverá possuir o cmake e o gcc instalados.
 
 ### Compilação
+
 ```shell
 mkdir build
 cd build
