@@ -1,4 +1,5 @@
 # Estruturas de Dados e Algoritmos
+
 Material auxiliar pra disciplina de Estruturas de Dados e Algoritmos do curso de Ciência da Computação do IFB-Taguatinga.
 
 ## Compilação para Linux
