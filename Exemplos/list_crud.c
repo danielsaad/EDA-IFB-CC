@@ -42,18 +42,51 @@ void print_list_int(list_t* l){
     printf("\n");
 }
 
+void imprime_pessoa(pessoa* p){
+  printf("Nome = ");
+  printf("%s\n",p->nome);
+  printf("CPF = ");
+  printf("%s\n",p->cpf);
+  printf("Idade = ");
+  printf("%d\n",p->idade);
+}
+
+
+
+void print_list_pessoa(list_t* l){
+    printf("\n");
+    list_iterator_t it;
+    for(it=l->head;it!=NULL;it=it->next){
+        imprime_pessoa(it->data);
+    }
+    printf("NULL\n");
+    printf("\n");
+}
+
+void le_pessoa(pessoa* p){
+  printf("Nome = ");
+  scanf("%s",p->nome);
+  printf("CPF = ");
+  scanf("%s",p->cpf);
+  printf("Idade = ");
+  scanf("%d",&(p->idade));
+}
+
+
 int main(){
     list_t* l1;
     list_t* l2;
-    list_initialize(&l1,constructor_int,destructor_int);
-    list_initialize(&l2,constructor_int,destructor_int);
+    list_initialize(&l1,constructor_pessoa,destructor_pessoa);
+    list_initialize(&l2,constructor_pessoa,destructor_pessoa);
     int i;
-    for(i=0;i<10;i++){
-        list_append(l1,&i);
-        list_prepend(l2,&i);
+    for(i=0;i<3;i++){
+        pessoa p;
+        le_pessoa(&p);
+        list_append(l1,&p);
+        list_prepend(l2,&p);
     }
-    print_list_int(l1);
-    print_list_int(l2);
+    print_list_pessoa(l1);
+    print_list_pessoa(l2);
     list_delete(&l1);
     list_delete(&l2);
     return 0;
