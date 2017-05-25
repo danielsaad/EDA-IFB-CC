@@ -77,33 +77,20 @@ void list_insert(list_t* l,void* data,size_t i){
     assert(i<=list_size(l));
     /** Cria o novo nó ao chamar a função list_new_node **/
     list_node_t* new_node = list_new_node(data,l->constructor);
-    /** Se a lista está vazia, a cabeça e a cauda devem apontar para o mesmo
-     * lugar, o nó recém criado **/
-    if(list_empty(l)){
-        l->head = new_node;
-        l->tail = new_node;
-    }
-    /** Se i==0 e a lista não está vazia, a inserção é feita na cabeça **/
-    else if(i==0){
-        /** Estabelece uma ligação com a cabeça antiga **/
-        new_node->next = l->head;
-        /** A cabeça recebe o nó recém inserido **/
-        l->head = new_node;
-    }
-    /** Inserção em uma cauda de uma lista com pelo menos 1 elemento **/
+    /** Se a lista está vazia, ou a posição de inserção é a 0, a
+	 	inserção é feita na cabeça **/
+	if(list_empty(l) || i==0){
+		list_prepend(l, data);
+	}    /** Inserção em uma cauda **/
     else if(i==list_size(l)){
-        /** Estabelece uma ligação da cauda antiga para o elemento recém
-         * criado **/
-        l->tail->next = new_node;
-        /** A cauda agora aponta para o elemento recém criado **/
-        l->tail = new_node;
+        list_append(l, data);
     }
     /** Inserção no meio da lista que tem pelo menos 1 elemento **/
     else{
         /** Precisamos encontrar o elemento que antecede a posição i ao
          * caminhar na lista **/
         list_iterator_t it = l->head;
-        int k;
+        size_t k;
         /** Caminhamos até a posição i-1 da lista **/
         for(k=0;k<i-1;k++){
             it = it->next;
@@ -162,42 +149,18 @@ void list_remove(list_t* l,size_t i){
     assert(!list_empty(l) && i<list_size(l));
     /** Nó a ser removido **/
     list_node_t* node;
-    /** Se a lista tem tamanho 1, ambas cabeça e cauda apontam para o único
-     * nó da lista **/
-    if(list_size(l)==1){
-        /** Nó a ser removido recebe a cabeça **/
-        node = l->head;
-        /** Cabeça recebe NULL **/
-        l->head = NULL;
-        /** Cauda recebe NULL **/
-        l->tail = NULL;
-    }
-    /** Se i=0 a remoção é feita na cabeça **/
-    else if(i==0){
-        /** O nó a ser removido recebe a cabeça **/
-        node = l->head;
-        /** A cabeça é atualizada para o segundo elemento **/
-        l->head = l->head->next;
+    /** Se a lista tem tamanho 1, ou a remoção é do primeiro elemento,
+		equivale a eliminar a cabeça
+	**/
+    if(list_size(l)==1 || i==0){
+		list_remove_head(l);
     }
     /** Se i==list_size(l)-1, a remoção é na cauda **/
     else if(i==list_size(l)-1){
-        /** Nó a ser removido recebe a cauda da lista **/
-        node = l->tail;
-        /** Em uma lista encadeada simples, não conseguimos deletar a cauda
-         * imediatamente. Temos que percorrer até o penúltimo elemento para
-         * atualizar a cauda corretamente.
-        /** Iterador começa da cabeça **/
-        list_iterator_t it = l->head;
-        /** Itera-se na lista até o penúltimo elemento **/
-        while(it->next!=l->tail){
-            it = it->next;
-        }
-        /** Penultimo elemento agora apontapara NULL**/
-        it->next = NULL;
-        /** Cauda é atualizada para o então penúltimo elemento **/
-        l->tail = it;
+        list_remove_tail(l);
     }
-    /** O nó a ser removido encontra-se no meio da lista **/
+    /** O nó a ser removido encontra-se no meio da lista e a lista
+		possuir mais que um elemento **/
     else{
         /** Devemor percorrer até o i-1-ésimo elemento a partir
          * da cabeça **/
@@ -217,7 +180,6 @@ void list_remove(list_t* l,size_t i){
     list_delete_node(node,l->destructor);
     /** Decrementa o tamanho da lista **/
     l->size--;
-
 }
 
 /** Remove a cabeça da lista **/

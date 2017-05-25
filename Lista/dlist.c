@@ -30,7 +30,7 @@ void dlist_initialize(dlist_t** l,dlist_node_constructor_fn constructor,
     (*l)->constructor = constructor;
     (*l)->destructor = destructor;
 }
-
+/** Deleta a lista por inteiro e libera espaço em memória **/
 void dlist_delete(dlist_t** l){
     while(!dlist_empty(*l)){
         dlist_remove_head(*l);
@@ -42,22 +42,12 @@ void dlist_delete(dlist_t** l){
 void dlist_insert(dlist_t* l,void* data,size_t i){
     assert(i<=dlist_size(l));
     dlist_node_t* new_node = dlist_new_node(data,l->constructor);
-    if(dlist_empty(l)){
-        /*Se a dlista está vazia, cabeça e cauda apontam para o mesmo lugar*/
-        l->head = new_node;
-        l->tail = new_node;
-    }
-    else if(i==0){
-        /*Inserção na cabeça*/
-        new_node->next = l->head;
-        l->head->prev = new_node;
-        l->head = new_node;
-    }
+    if(dlist_empty(l) || i==0){
+		dlist_prepend(l,data);
+	}
     else if(i==dlist_size(l)){
         /*Inserção na cauda*/
-        new_node->prev = l->tail;
-        l->tail->next = new_node;
-        l->tail = new_node;
+		dlist_append(l,data);
     }
     else{
         /*Inserção no meio da lista*/
@@ -108,22 +98,11 @@ void dlist_append(dlist_t* l, void* data){
 void dlist_remove(dlist_t* l,size_t i){
     assert(!dlist_empty(l) && i<dlist_size(l));
     dlist_node_t* node;
-    if(dlist_size(l)==1){
-        /*Remoção em uma dlista com um elemento*/
-        node = l->head;
-        l->head = NULL;
-        l->tail = NULL;
-    }
-    else if(i==0){
-        /*Remoção na cabeça*/
-        node = l->head;
-        l->head = l->head->next;
-        l->head->prev = NULL;
-    }
+    if(dlist_size(l)==1 || i==0){
+		dlist_remove_head(l);
+	}
     else if(i==dlist_size(l)-1){
-        node = l->tail;
-        l->tail = l->tail->prev;
-        l->tail->next = NULL;
+        dlist_remove_tail(l);
     }
     else{
         dlist_iterator_t it = l->head;
