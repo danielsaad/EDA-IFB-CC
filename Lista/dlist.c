@@ -41,7 +41,6 @@ void dlist_delete(dlist_t** l){
 
 void dlist_insert(dlist_t* l,void* data,size_t i){
     assert(i<=dlist_size(l));
-    dlist_node_t* new_node = dlist_new_node(data,l->constructor);
     if(dlist_empty(l) || i==0){
 		dlist_prepend(l,data);
 	}
@@ -50,6 +49,7 @@ void dlist_insert(dlist_t* l,void* data,size_t i){
 		dlist_append(l,data);
     }
     else{
+		dlist_node_t* new_node = dlist_new_node(data,l->constructor);
         /*Inserção no meio da lista*/
         /*Precisamos encontrar o elemento que antecede a posição i*/
         dlist_iterator_t it = l->head;
@@ -62,8 +62,8 @@ void dlist_insert(dlist_t* l,void* data,size_t i){
         new_node->prev = it;
         it->next->prev = new_node;
         it->next = new_node;
+		l->size++;
     }
-    l->size++;
 }
 
 /** Insere um elemento na cabeça da dlista **/
@@ -113,9 +113,9 @@ void dlist_remove(dlist_t* l,size_t i){
         node = it;
         node->prev->next = node->next;
         node->next->prev = node->prev;
+		dlist_delete_node(node,l->destructor);
+		l->size--;
     }
-    dlist_delete_node(node,l->destructor);
-    l->size--;
 
 }
 

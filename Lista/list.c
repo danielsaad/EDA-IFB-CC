@@ -75,18 +75,19 @@ void list_delete(list_t** l){
 void list_insert(list_t* l,void* data,size_t i){
     /** Apenas modo debug, aborta o programa se a posição for inválida **/
     assert(i<=list_size(l));
-    /** Cria o novo nó ao chamar a função list_new_node **/
-    list_node_t* new_node = list_new_node(data,l->constructor);
     /** Se a lista está vazia, ou a posição de inserção é a 0, a
 	 	inserção é feita na cabeça **/
 	if(list_empty(l) || i==0){
 		list_prepend(l, data);
-	}    /** Inserção em uma cauda **/
+	}
+	/** Inserção na cauda **/
     else if(i==list_size(l)){
         list_append(l, data);
     }
     /** Inserção no meio da lista que tem pelo menos 1 elemento **/
     else{
+		/** Cria o novo nó ao chamar a função list_new_node **/
+		list_node_t* new_node = list_new_node(data,l->constructor);
         /** Precisamos encontrar o elemento que antecede a posição i ao
          * caminhar na lista **/
         list_iterator_t it = l->head;
@@ -101,9 +102,9 @@ void list_insert(list_t* l,void* data,size_t i){
         new_node->next = it->next;
         /** O next do nó da posição i-1 recebe o elemento recém inserido **/
         it->next = new_node;
+		/** O tamanho da lista é incrementado **/
+		l->size++;
     }
-    /** O tamanho da lista é incrementado **/
-    l->size++;
 }
 
 /** Insere um elemento na cabeça da lista **/
@@ -147,8 +148,6 @@ void list_remove(list_t* l,size_t i){
     /** Debug apenas, aborta o programa se a remoção estiver sendo feita
      * em uma lista vazia ou em uma posição inexistente da lista **/
     assert(!list_empty(l) && i<list_size(l));
-    /** Nó a ser removido **/
-    list_node_t* node;
     /** Se a lista tem tamanho 1, ou a remoção é do primeiro elemento,
 		equivale a eliminar a cabeça
 	**/
@@ -162,7 +161,9 @@ void list_remove(list_t* l,size_t i){
     /** O nó a ser removido encontra-se no meio da lista e a lista
 		possuir mais que um elemento **/
     else{
-        /** Devemor percorrer até o i-1-ésimo elemento a partir
+		/** Nó a ser removido **/
+	   	list_node_t* node;
+        /** Devemos percorrer até o i-1-ésimo elemento a partir
          * da cabeça **/
         list_iterator_t it = l->head;
         size_t k;
@@ -175,11 +176,11 @@ void list_remove(list_t* l,size_t i){
         /** O anterior ao nó a ser removido aponta para o elemento
          * que vem após o nó a ser removido **/
         it->next = node->next;
+		/** Deleta o nó atribuido anteriormente **/
+		list_delete_node(node,l->destructor);
+		/** Decrementa o tamanho da lista **/
+		l->size--;
     }
-    /** Deleta o nó atribuido anteriormente **/
-    list_delete_node(node,l->destructor);
-    /** Decrementa o tamanho da lista **/
-    l->size--;
 }
 
 /** Remove a cabeça da lista **/

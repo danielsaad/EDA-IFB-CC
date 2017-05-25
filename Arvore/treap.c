@@ -42,6 +42,8 @@ static void treap_delete_node(treap_node_t* v,treap_element_destructor_fn destru
 
 void treap_delete(treap_t** t){
     treap_delete_helper((*t),(*t)->root);
+	free(*t);
+	(*t) = NULL;
 }
 
 static void treap_delete_helper(treap_t* t,treap_node_t* v){

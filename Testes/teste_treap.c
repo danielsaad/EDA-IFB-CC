@@ -116,6 +116,7 @@ START_TEST(test_treap_key_property){
         treap_insert(t,&v[i]);
     }
     ck_assert(has_key_property(t,t->root));
+	treap_delete(&t);
 }
 END_TEST
 
@@ -128,6 +129,7 @@ START_TEST(test_treap_key_property_unique_keys){
         treap_insert(t,&unique_keys[i]);
     }
     ck_assert(has_key_property(t,t->root));
+	treap_delete(&t);
 }
 END_TEST
 
