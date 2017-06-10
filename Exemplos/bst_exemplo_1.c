@@ -17,7 +17,10 @@ void int_destructor(void* data){
 }
 
 int int_comparator(const void* a,const void* b){
-    if(*(int*)a<*(int*)b){
+    int c,d;
+    c = *(int*)a;
+    d = *(int*)b;
+    if(c<d){
         return -1;
     }
     else if(*(int*)a==*(int*)b){

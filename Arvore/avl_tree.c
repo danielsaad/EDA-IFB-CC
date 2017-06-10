@@ -155,17 +155,17 @@ avl_node_t* avl_tree_insert_helper(avl_tree_t* t,avl_node_t* v,void* data){
     }
     v->height = avl_calculate_height(v);
     int balance = avl_node_get_balance(v);
-    if(balance>1 && t->comparator(data,v->left->data)<0){
+    if(balance>1 && avl_node_get_balance(v->left)>=0){
         return avl_right_rotate(v);
     }
-    if(balance<-1 && t->comparator(data,v->right->data)>=0){
+    if(balance<-1 && avl_node_get_balance(v->right)<=0){
         return avl_left_rotate(v);
     }
-    if(balance>1 && t->comparator(data,v->left->data)>=0){
+    if(balance>1 && avl_node_get_balance(v->left)<0){
         v->left = avl_left_rotate(v->left);
         return avl_right_rotate(v);
     }
-    if(balance < -1 && t->comparator(data,v->right->data)<0){
+    if(balance < -1 && avl_node_get_balance(v->right)>0){
         v->right = avl_right_rotate(v->right);
         return avl_left_rotate(v);
     }
@@ -225,17 +225,17 @@ avl_node_t* avl_tree_remove_helper(avl_tree_t* t,avl_node_t* v,void* data){
     }
     v->height = avl_calculate_height(v);
     int balance = avl_node_get_balance(v);
-    if(balance>1 && avl_node_get_balance(v->left)>=0){
-        return avl_right_rotate(v);
-    }
-    if(balance>1 && avl_node_get_balance(v->left)<0){
-        v->left = avl_left_rotate(v->left);
+	if(balance>1 && avl_node_get_balance(v->left)>=0){
         return avl_right_rotate(v);
     }
     if(balance<-1 && avl_node_get_balance(v->right)<=0){
         return avl_left_rotate(v);
     }
-    if(balance<-1 && avl_node_get_balance(v->right)>0){
+    if(balance>1 && avl_node_get_balance(v->left)<0){
+        v->left = avl_left_rotate(v->left);
+        return avl_right_rotate(v);
+    }
+    if(balance < -1 && avl_node_get_balance(v->right)>0){
         v->right = avl_right_rotate(v->right);
         return avl_left_rotate(v);
     }
