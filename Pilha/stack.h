@@ -14,6 +14,10 @@ typedef struct stack_node_t{
     struct stack_node_t* next; /*ponteiro para o próximo elemento*/
 }stack_node_t;
 
+/**
+stack_iterator_t é um apelido para nó da pilha (do tipo stack_node_t). Utilizado quando queremos
+iterar na pilha.
+ */
 typedef stack_node_t* stack_iterator_t;
 
 typedef struct stack_t{
