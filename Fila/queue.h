@@ -8,7 +8,7 @@ typedef void (*queue_node_destructor_fn)(void *);
 
 
 /**A nossa fila consiste de vários nós,
-que possuem o tipo linked_list_node_t **/
+que possuem o tipo queue_node_t **/
 typedef struct queue_node_t{
     void* data; /*Ponteiro para um dado genérico de qualquer tipo*/
     struct queue_node_t* next; /*ponteiro para o próximo elemento*/
@@ -21,7 +21,7 @@ typedef struct queue_t{
     queue_node_t* back; /*Traseira da fila*/
     queue_node_constructor_fn constructor; /*Função para construir o objeto*/
     queue_node_destructor_fn destructor; /*Função para destruir o objeto*/
-    size_t size; /*tamanho da pilha*/
+    size_t size; /*tamanho da fila*/
 }queue_t;
 
 
