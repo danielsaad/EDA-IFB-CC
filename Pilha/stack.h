@@ -7,8 +7,8 @@ typedef void* (*stack_node_constructor_fn) (void*);
 typedef void (*stack_node_destructor_fn)(void *);
 
 
-/**A nossa lista encadeada consiste de vários nós,
-que possuem o tipo linked_list_node_t **/
+/**A nossa pilha consiste de vários nós,
+que possuem o tipo stack_node_t **/
 typedef struct stack_node_t{
     void* data; /*Ponteiro para um dado genérico de qualquer tipo*/
     struct stack_node_t* next; /*ponteiro para o próximo elemento*/
