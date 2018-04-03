@@ -15,7 +15,6 @@ int main(void){
 
     /* Aloca-se um etor de 100000 posições */
     int* ptr = malloc(sizeof(int)*100000);
-
     /* MEMORY LEAK: atribui um novo endereço de memória para ptr
      * sem desalocar o bloco de memória alocado */
     ptr = NULL;
