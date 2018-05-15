@@ -76,18 +76,23 @@ void le_pessoa(pessoa* p){
 int main(){
     list_t* l1;
     list_t* l2;
+    list_t* l3;
     list_initialize(&l1,constructor_pessoa,destructor_pessoa);
     list_initialize(&l2,constructor_pessoa,destructor_pessoa);
+    list_initialize(&l3,constructor_int,destructor_int);
     int i;
     for(i=0;i<3;i++){
         pessoa p;
         le_pessoa(&p);
         list_append(l1,&p);
         list_prepend(l2,&p);
+        list_append(l3,&i);
     }
     print_list_pessoa(l1);
     print_list_pessoa(l2);
+    print_list_int(l3);
     list_delete(&l1);
     list_delete(&l2);
+    list_delete(&l3);
     return 0;
 }

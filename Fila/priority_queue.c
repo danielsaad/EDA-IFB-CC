@@ -6,7 +6,7 @@
 static void priority_queue_heapify_bottom_up(priority_queue_t* pq,size_t i){
     size_t p;
     for(p=(i-1)/2;i!=0;p=(p-1)/2){
-        if(pq->comparator(pq->data[i],pq->data[p])>0){
+        if(pq->comparator(pq->data[i],pq->data[p])<=0){
             break;
         }
         void* aux = pq->data[i];
@@ -19,23 +19,23 @@ static void priority_queue_heapify_bottom_up(priority_queue_t* pq,size_t i){
 
 static void priority_queue_heapify_top_down(priority_queue_t* pq,size_t i){
     size_t l,r;
-    size_t smallest = i;
+    size_t largest = i;
     while(i<priority_queue_size(pq)){
-        i = smallest;
+        i = largest;
         l = 2*i +1;
         r = 2*i +2;
-        if(l<priority_queue_size(pq) && pq->comparator(pq->data[i],pq->data[l])>0){
-            smallest = l;
+        if(l<priority_queue_size(pq) && pq->comparator(pq->data[i],pq->data[l])<=0){
+            largest = l;
         }
-        if(r<priority_queue_size(pq) && pq->comparator(pq->data[smallest],pq->data[r])>0){
-            smallest = r;
+        if(r<priority_queue_size(pq) && pq->comparator(pq->data[largest],pq->data[r])<0){
+            largest = r;
         }
-        if(smallest==i){
+        if(largest==i){
             break;
         }
         void* aux = pq->data[i];
-        pq->data[i] = pq->data[smallest];
-        pq->data[smallest] = aux;
+        pq->data[i] = pq->data[largest];
+        pq->data[largest] = aux;
     }
 }
 
