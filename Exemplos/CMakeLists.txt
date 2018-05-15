@@ -36,6 +36,8 @@ LIST(APPEND src_list
 	./list_quicksort.c
     ./exemplo_fila_cantina.c
     ./exemplo_fila_de_prioridade_cantina.c
+    ./uri_1068.c
+    ./remove_nulo_lista_recursivamente.c
 )
 
 foreach(src ${src_list})
