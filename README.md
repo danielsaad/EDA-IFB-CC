@@ -21,5 +21,5 @@ os executáveis se encontrarão na pasta **bin**.
 
 ## Referência
 
-Para consulta, uma (cheatsheet)[cheatsheet.pdf] está disponível.
+Para consulta, uma [cheatsheet](cheatsheet.pdf) está disponível.
 
