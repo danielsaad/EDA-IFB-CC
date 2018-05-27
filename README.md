@@ -18,3 +18,8 @@ make install
 
 Após isso os cabeçalhos estarão na pasta **includes** e a biblioteca estática estará na pasta **lib**. Por fim,
 os executáveis se encontrarão na pasta **bin**.
+
+## Referência
+
+Para consulta, uma (cheatsheet)[cheatsheet.pdf] está disponível.
+
