@@ -4,14 +4,6 @@ typedef void* (*tree_constructor_fn)(void* );
 typedef void (*tree_destructor_fn)(void* );
 typedef int (*tree_comparator_fn)(const void*, const void* );
 
-
-void tree_initialize(tree_t** t, 
-    tree_constructor_fn constructor,
-    tree_destructor_fn destructor, 
-    tree_comparator_fn comparator);
-
-void tree_delete(tree_t** t);
-
 typedef struct tree_node_t{
     struct tree_node_t* left;
     struct tree_node_t* right;
@@ -27,4 +19,12 @@ typedef struct tree_t{
 
 
 
-#define TREE_H_INCLUDED
+void tree_initialize(tree_t** t, 
+    tree_constructor_fn constructor,
+    tree_destructor_fn destructor, 
+    tree_comparator_fn comparator);
+
+void tree_delete(tree_t** t);
+
+
+#endif

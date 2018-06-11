@@ -56,9 +56,10 @@ ADD_LIBRARY(ed1 STATIC
 	./Lista/list.c
 	./Lista/dlist.c
 	./Utils/alloc.c
+	./Arvore/avl_tree.c
 	./Arvore/bst.c
-        ./Arvore/avl_tree.c
-        ./Arvore/treap.c
+	./Arvore/treap.c
+	./Arvore/tree.c
 	./Vector/vector.c
 	./Fila/queue.c
 	./Fila/priority_queue.c
