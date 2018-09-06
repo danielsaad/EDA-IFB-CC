@@ -3,12 +3,12 @@
 int verifica_isolada(int** matriz,int n,int cidade){
 	int k;
 	for(k=0;k<n;k++){
-		if(m[cidade][k]){
+		if(matriz[cidade][k]){
 			return 0;
 		}
 	}	
 	for(k=0;k<n;k++){
-		if(m[k][cidade]){
+		if(matriz[k][cidade]){
 			return 0;
 		}
 	}
