@@ -1,5 +1,6 @@
 #ifndef TREE_H_INCLUDED
 #define TREE_H_INCLUDED
+
 typedef void* (*tree_constructor_fn)(void* );
 typedef void (*tree_destructor_fn)(void* );
 typedef int (*tree_comparator_fn)(const void*, const void* );

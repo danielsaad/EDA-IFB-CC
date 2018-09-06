@@ -1,11 +1,3 @@
-/**
- * Autor: Daniel Saad Nogueira Nunes
- * Comentários: Neste programa é explorada
- * a alocação dinâmica de vetores através
- * de ponteiros em C.
-**/
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -27,15 +19,13 @@ int main(void){
      * De fato o que é feito é uma aritmética de ponteiros.
      * v[i] = *(v+i) */
     for(j=0;j<n;j++){
-        v[j] = rand() % 1000; /**Gera um numero aleatório entre 0 e 999**/
+        v[j] = rand() % 1000; /** Gera um numero aleatório entre 0 e 999 **/
     }
-
     /* Impressão do vetor */
     for(j=0;j<n;j++){
         printf("v[%d] = %d\n",j,v[j]);
     }
-
-    /* O vetor é desalocado */
+    /* O vetor é liberado */
     free(v);
     return 0;
 }
