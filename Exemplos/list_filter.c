@@ -1,6 +1,7 @@
+#include <string.h>
+#include <stdio.h>
 #include "../Lista/list.h"
 #include "../Utils/alloc.h"
-#include <string.h>
 
 void imprime_lista(list_t* l){
     list_iterator_t it = l->head;
@@ -48,7 +49,6 @@ void list_filter(list_t* l, int (*pred)(void* data)){
             if(it==l->head){
                 list_remove_head(l);
                 it = l->head;
-                anterior = NULL;
             }
             else{
                 anterior->next = it->next;
@@ -75,7 +75,7 @@ int main(void){
         list_append(l,&valor[i]);
     }
     imprime_lista(l);
-    list_filter(l,is_one);
+    list_filter(l,is_zero);
     imprime_lista(l);
     return 0;
 }
