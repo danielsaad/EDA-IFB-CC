@@ -53,6 +53,10 @@ tree_node_t* build_tree_helper(tree_t* t,
     int* i_par,int* i_value){
     node = NULL;
     if(seq_par[*i_par]=='('){
+        if(seq_par[*i_par+1==')']){
+            (*i_par)+=2;
+            return NULL;
+        }
         node = new_tree_node(t,&seq_value[*i_value]);
         (*i_par)++;
         (*i_value)++;
