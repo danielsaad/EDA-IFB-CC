@@ -11,8 +11,8 @@
 #include "alloc.h"
 #include "sorting.h"
 
-#define SIZE 10000 /**tamanho do vetor a ser gerado**/
-#define MAX 10000 /**Maior numero possivel no vetor**/
+#define SIZE 100000 /**tamanho do vetor a ser gerado**/
+#define MAX 100000 /**Maior numero possivel no vetor**/
 
 
 int ordenado(int* vet, int tam){

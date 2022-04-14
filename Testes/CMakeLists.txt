@@ -31,7 +31,7 @@ add_executable(teste_main teste_main.c
     teste_treap.c
 )
 
-target_link_libraries(teste_main libcheck ed1 m rt)
+target_link_libraries(teste_main libcheck ed1 m rt pthread)
 
 install(TARGETS teste_main RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin)
 
