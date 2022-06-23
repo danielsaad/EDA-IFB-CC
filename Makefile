@@ -16,7 +16,7 @@ test_src = $(wildcard Testes/*.c)
 
 BINFOLDER:= bin
 SRC:=$(wildcard Exemplos/*.c)
-BIN = $(patsubst Exemplos/%.c,$(BINFOLDER)/%,$(SRC))
+BIN:= $(patsubst Exemplos/%.c,$(BINFOLDER)/%,$(SRC))
 
 all: $(BUILD_FOLDER) $(LIB)
 
@@ -27,6 +27,9 @@ $(BIN): $(LIB)
 
 bin/%: Exemplos/%.c
 	$(CC) $(CFLAGS) $^ -I./$(INCLUDE_FOLDER)  $(LIB) -o $@
+
+$(BINFOLDER):
+	@mkdir -p bin
 
 $(BUILD_FOLDER):
 	@mkdir -p $(BUILD_FOLDER)

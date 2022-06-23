@@ -1,2 +1,4 @@
 bin/*
-build/*
+objects/*
+Testes/main
+*a.out
