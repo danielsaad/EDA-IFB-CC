@@ -63,6 +63,9 @@ void deque_pop_front(deque_t* d){
     if(deque_size(d)==1){
         d->back = NULL;
     }
+    else{
+        d->front->prev = NULL;
+    }
     d->destructor(it->data);
     free(it);
     d->size--;
@@ -75,6 +78,9 @@ void deque_pop_back(deque_t* d){
     d->back = d->back->prev;
     if(deque_size(d)==1){
         d->front = NULL;
+    }
+    else{
+        d->back->next = NULL;
     }
     d->destructor(it->data);
     free(it);
