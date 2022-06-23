@@ -21,7 +21,7 @@ void aluno_destructor(void* data){
 }
 
 int aluno_comparator(const void* a,const void* b){
-    aluno *aluno1, *aluno2;
+    const aluno *aluno1, *aluno2;
     aluno1 = a;
     aluno2 = b; 
     double media1,media2;  

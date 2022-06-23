@@ -1,6 +1,8 @@
+#include <check.h>
 #include <stdlib.h>
 #include <time.h>
-#include "check.h"
+#include "test.h"
+
 int main(void){
     srand(time(NULL));
     int number_failed;
@@ -15,7 +17,7 @@ int main(void){
     srunner_add_suite(sr,make_bst_suite());
     srunner_add_suite(sr,make_avl_tree_suite());
     srunner_add_suite(sr,make_treap_suite());
-    srunner_set_fork_status(sr, CK_NOFORK);
+    // srunner_set_fork_status(sr, CK_NOFORK);
     srunner_run_all(sr, CK_VERBOSE);
     number_failed = srunner_ntests_failed(sr);
     srunner_free(sr);

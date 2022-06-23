@@ -21,7 +21,7 @@ void destructor_pessoa(void* data){
 }
 
 int comparator_pessoa(const void* a, const void* b){
-    pessoa *p1,*p2;
+    const pessoa *p1,*p2;
     p1 = a;
     p2 = b;
     if(p1->professor == p2->professor){

@@ -1,5 +1,5 @@
 #include <string.h>
-#include "check.h"
+#include <check.h>
 #include "queue.h"
 #include "alloc.h"
 

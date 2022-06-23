@@ -1,6 +1,6 @@
+#include <check.h>
 #include "alloc.h"
 #include "list.h"
-#include "check.h"
 
 
 static const int N = 10000;

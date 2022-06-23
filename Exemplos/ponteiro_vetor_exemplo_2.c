@@ -15,12 +15,12 @@ int main(void){
     int* ptr_v = v;
     size_t i;
     for(i=0;i<4;i++){
-        printf("Endereço de s[%d] = %p.\n",i,&s[i]);
-        printf("Endereço de v[%d] = %p.\n",i,&v[i]);
+        printf("Endereço de s[%zu] = %p.\n",i,&s[i]);
+        printf("Endereço de v[%zu] = %p.\n",i,&v[i]);
     }
     for(i=0;i<4;i++){
-        printf("ptr_s + %d = %p.\n",i,ptr_s + i);
-        printf("ptr_v + %d = %p.\n",i,ptr_v + i);
+        printf("ptr_s + %zu = %p.\n",i,ptr_s + i);
+        printf("ptr_v + %zu = %p.\n",i,ptr_v + i);
     }
 	return 0;
 }

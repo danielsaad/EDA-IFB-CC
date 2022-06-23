@@ -2,6 +2,8 @@
 #include <string.h>
 #include "queue.h"
 #include "alloc.h"
+
+
 typedef struct aluno{
     char nome[30];
     int idade;

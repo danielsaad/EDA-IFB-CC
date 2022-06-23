@@ -1,5 +1,5 @@
+#include <check.h>
 #include "alloc.h"
-#include "check.h"
 #include "deque.h"
 
 static const int N = 10000;

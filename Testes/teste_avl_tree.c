@@ -1,11 +1,11 @@
-#include "check.h"
+#include <check.h>
 #include "avl_tree.h"
 #include "alloc.h"
 
 
 static int* v;
 static int* unique_keys;
-static const int N = 10000;
+static const int N = 1000;
 
 static void setup(void){
     v = callocx(N,sizeof(int));

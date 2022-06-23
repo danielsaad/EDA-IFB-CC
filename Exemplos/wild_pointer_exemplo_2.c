@@ -8,6 +8,7 @@
 **/
 
 #include <stdio.h>
+#include <stdlib.h>
 
 int* func(void){
     int* num = malloc(sizeof(int));

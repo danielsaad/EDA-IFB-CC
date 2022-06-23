@@ -1,5 +1,5 @@
 #include "alloc.h"
-#include "check.h"
+#include <check.h>
 #include "sorting.h"
 
 static int* v;
