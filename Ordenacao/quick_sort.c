@@ -26,7 +26,7 @@ static size_t partition(int *vet, int esq,int dir,int pivot){
 
 void quick_sort_helper(int*v, int l,int r){
     if (l < r){
-        int pos = partition(v,l,r,r);
+        size_t pos = partition(v,l,r,r);
         quick_sort_helper(v, l, pos - 1);
         quick_sort_helper(v, pos + 1, r);
     }
