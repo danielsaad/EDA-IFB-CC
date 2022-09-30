@@ -52,7 +52,8 @@ $(BUILD_FOLDER)/%.o: %.c %.h
 
 
 test: $(test_src) $(LIB) 
-	$(CC) $(CFLAGS) -g $^ -I$(INCLUDE_FOLDER) -o  Testes/main  -pthread -lcheck -pthread -lrt -lm 
+	$(CC) $(CFLAGS) -g $^ -I$(INCLUDE_FOLDER) -o  Testes/main  -pthread -lcheck -pthread -lrt -lm -lsubunit
+
 	@echo "Running Tests"
 	./Testes/main
 
