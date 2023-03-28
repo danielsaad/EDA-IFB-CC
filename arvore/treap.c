@@ -16,6 +16,7 @@ static int treap_find_helper(treap_t* t,treap_node_t* v,void* data);
 void treap_initialize(treap_t** t,treap_element_constructor_fn constructor,
                       treap_element_destructor_fn destructor,
                       treap_tree_element_compare_fn comparator){
+    srand(time(NULL));
     (*t) = mallocx(sizeof(treap_t));
     (*t)->size = 0;
     (*t)->root = NULL;
@@ -31,7 +32,6 @@ static treap_node_t* treap_new_node(void* data,treap_element_constructor_fn cons
     new_node->right = NULL;
     new_node->priority = rand();
     new_node->priority = new_node->priority == 0 ? 1 : new_node->priority;
-    srand(time(NULL));
     return new_node;
 }
 
