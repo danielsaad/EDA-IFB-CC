@@ -7,8 +7,8 @@ BUILD_FOLDER:= objects
 LIB_FOLDER:=lib
 INCLUDE_FOLDER:=include
 LIB=$(LIB_FOLDER)/libeda.a
-LIBSRC=$(wildcard Arvore/*.c) $(wildcard Fila/*.c)  $(wildcard Lista/*.c)  $(wildcard Ordenacao/*.c)  $(wildcard Pilha/*.c) $(wildcard Utils/*.c) $(wildcard Vector/*.c)  
-LIBHEAD=$(wildcard Arvore/*.h)  $(wildcard Fila/*.h)  $(wildcard Lista/*.h)  $(wildcard Ordenacao/*.h)  $(wildcard Pilha/*.h) $(wildcard Utils/*.h) $(wildcard Vector/*.h) 
+LIBSRC=$(wildcard Arvore/*.c) $(wildcard Fila/*.c)  $(wildcard Lista/*.c)  $(wildcard Ordenacao/*.c)  $(wildcard Pilha/*.c) $(wildcard Utils/*.c) $(wildcard vetor-dinamico/*.c)  
+LIBHEAD=$(wildcard Arvore/*.h)  $(wildcard Fila/*.h)  $(wildcard Lista/*.h)  $(wildcard Ordenacao/*.h)  $(wildcard Pilha/*.h) $(wildcard Utils/*.h) $(wildcard vetor-dinamico/*.h) 
 LIBOBJ = $(patsubst %.c,$(BUILD_FOLDER)/%.o,$(LIBSRC))
 
 test_src = $(wildcard Testes/*.c)
