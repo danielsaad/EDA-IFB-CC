@@ -45,6 +45,12 @@ START_TEST(test_inserion_sort){
 }
 END_TEST
 
+START_TEST(test_selection_sort){
+    selection_sort(v,N);
+    ck_assert(is_sorted(v,N));
+}
+END_TEST
+
 
 START_TEST(test_heap_sort){
     heap_sort(v,N);
@@ -89,6 +95,7 @@ Suite* make_sorting_suite(void){
     tcase_add_checked_fixture(test_cases, setup, teardown);
     tcase_add_test(test_cases,test_bubble_sort);
     tcase_add_test(test_cases,test_inserion_sort);
+    tcase_add_test(test_cases,test_selection_sort);
     tcase_add_test(test_cases,test_heap_sort);
     tcase_add_test(test_cases,test_quick_sort);
     tcase_add_test(test_cases,test_merge_sort);
