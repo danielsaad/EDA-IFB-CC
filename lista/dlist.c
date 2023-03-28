@@ -1,6 +1,6 @@
 #include <assert.h>
 #include "dlist.h"
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 
 static dlist_node_t* dlist_new_node(void* data,dlist_node_constructor_fn constructor);
 static void dlist_delete_node(dlist_node_t* node,dlist_node_destructor_fn destructor);

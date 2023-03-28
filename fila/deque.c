@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 #include "deque.h"
 
 /**Inicializa o deque**/

@@ -1,5 +1,5 @@
 #include "dynamic_array.h"
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 
 void dynamic_array_initialize(dynamic_array **arr) {
     /*** Utilizamos uma capacidade de 4 por padrão na criação

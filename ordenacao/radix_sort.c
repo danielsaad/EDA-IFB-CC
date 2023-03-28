@@ -1,6 +1,6 @@
 #include <string.h>
 #include "radix_sort.h"
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 
 void radix_sort(int* v, size_t size){
     int i;

@@ -1,6 +1,6 @@
 #include <assert.h>
 #include "priority_queue.h"
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 
 
 static void priority_queue_heapify_bottom_up(priority_queue_t* pq,size_t i){

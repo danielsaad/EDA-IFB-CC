@@ -1,5 +1,5 @@
 #include "avl_tree.h"
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 #include <assert.h>
 
 static void avl_tree_delete_node(avl_node_t *v,

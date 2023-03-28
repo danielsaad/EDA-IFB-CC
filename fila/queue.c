@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "queue.h"
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 
 /**Inicializa a fila**/
 void queue_initialize(queue_t** q,queue_node_constructor_fn constructor,

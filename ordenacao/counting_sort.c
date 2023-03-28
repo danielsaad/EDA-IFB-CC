@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 #include "counting_sort.h"
 /*
  * Complexidade do Counting Sort

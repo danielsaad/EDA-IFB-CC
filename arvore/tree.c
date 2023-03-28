@@ -1,5 +1,5 @@
 #include "tree.h"
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 
 static void tree_delete_helper(tree_t* t,tree_node_t* node){
     if(node != NULL){

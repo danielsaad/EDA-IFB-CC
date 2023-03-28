@@ -1,6 +1,6 @@
 #include <assert.h>
 #include "vector.h"
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 
 void vector_initialize(vector** v,vector_element_constructor_fn constructor,
                        vector_element_destructor_fn destructor){

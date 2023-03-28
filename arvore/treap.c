@@ -2,7 +2,7 @@
 #include <time.h>
 #include <assert.h>
 #include "treap.h"
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 
 static treap_node_t* treap_new_node(void* data,treap_element_constructor_fn constructor);
 static void treap_delete_node(treap_node_t* v,treap_element_destructor_fn destructor);

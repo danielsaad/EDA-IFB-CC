@@ -1,6 +1,6 @@
 #include <assert.h>
 #include "list.h"
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 
 /** Protótipos internos **/
 

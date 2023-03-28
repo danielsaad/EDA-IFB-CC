@@ -1,5 +1,5 @@
 #include "merge_sort.h"
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 static void merge(int *v, int *v1, int *v2, size_t size) {
 
     size_t size_v1 = size / 2;

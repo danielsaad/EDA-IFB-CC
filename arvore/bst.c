@@ -1,5 +1,5 @@
 #include "bst.h"
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 
 static bst_node_t *bst_insert_helper(bst_t *t, bst_node_t *v, void *data);
 
