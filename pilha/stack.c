@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "stack.h"
-#include "../Utils/alloc.h"
+#include "../utils/alloc.h"
 
 /**Inicializa pilha**/
 void stack_initialize(stack_t** s,stack_node_constructor_fn constructor,
