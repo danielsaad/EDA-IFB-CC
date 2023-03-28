@@ -3,7 +3,7 @@
  * Comentários: Neste programa é explorada
  * a emulação de passagem por referência em funções na
  * linguagem C.
-**/
+ **/
 
 #include <stdio.h>
 
@@ -13,14 +13,14 @@
  * é criada. Como a cópia aponta para o endereço de x, podemos modificar
  * o conteúdo da região de memória apontada por x. **/
 
-void cubo(double *x){
+void cubo(double *x) {
     *x = *x * *x * *x;
 }
 
-int main(void){
+int main(void) {
     double a = 3;
-    printf("O cubo de %lf é ",a);
+    printf("O cubo de %lf é ", a);
     cubo(&a);
-    printf("%lf\n",a);
-    return(0);
+    printf("%lf\n", a);
+    return (0);
 }

@@ -1,11 +1,11 @@
 #include <stdlib.h>
 
-int* f(int** v){
-	int* ptr = malloc(sizeof(int) * 100000);
-	*v = ptr;
+int *f(int **v) {
+    int *ptr = malloc(sizeof(int) * 100000);
+    *v = ptr;
 }
 
-int main(void){
-	int* v;
-	f(&v);
+int main(void) {
+    int *v;
+    f(&v);
 }

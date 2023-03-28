@@ -9,7 +9,7 @@
 **/
 #include <stdio.h>
 
-typedef int (*ptr_soma)(int,int);
+typedef int (*tipo_funcao_soma)(int,int);
 
 int soma(int a,int b){
     return(a+b);
@@ -17,8 +17,8 @@ int soma(int a,int b){
 
 int main(void){
     /* Declaração de ponteiro para função do tipo
-     * ptr_soma */
-    ptr_soma ptr = soma;
+     * tipo_funcao_soma */
+    tipo_funcao_soma ptr = soma;
     printf("Soma = %d.\n",ptr(1,2));
     return 0;
 }
