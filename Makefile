@@ -11,12 +11,12 @@ LIBSRC=$(wildcard arvore/*.c) $(wildcard fila/*.c)  $(wildcard lista/*.c)  $(wil
 LIBHEAD=$(wildcard arvore/*.h)  $(wildcard fila/*.h)  $(wildcard lista/*.h)  $(wildcard ordenacao/*.h)  $(wildcard pilha/*.h) $(wildcard utils/*.h) $(wildcard vetor-dinamico/*.h) 
 LIBOBJ = $(patsubst %.c,$(BUILD_FOLDER)/%.o,$(LIBSRC))
 
-test_src = $(wildcard Testes/*.c)
+test_src = $(wildcard testes/*.c)
 
 
 BINFOLDER:= bin
-SRC:=$(wildcard Exemplos/*.c)
-BIN:= $(patsubst Exemplos/%.c,$(BINFOLDER)/%,$(SRC))
+SRC:=$(wildcard exemplos/*.c)
+BIN:= $(patsubst exemplos/%.c,$(BINFOLDER)/%,$(SRC))
 
 all: $(BUILD_FOLDER) $(LIB)
 
@@ -52,9 +52,9 @@ $(BUILD_FOLDER)/%.o: %.c %.h
 
 
 test: $(test_src) $(LIB) 
-	$(CC) $(CFLAGS) $^ -I$(INCLUDE_FOLDER) -o  Testes/main  -pthread -lcheck -pthread -lrt -lm
+	$(CC) $(CFLAGS) $^ -I$(INCLUDE_FOLDER) -o  testes/main  -pthread -lcheck -pthread -lrt -lm
 	@echo "Running Tests"
-	./Testes/main
+	./testes/main
 
 .PHONY: clean
 clean:
