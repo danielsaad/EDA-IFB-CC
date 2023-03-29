@@ -19,7 +19,7 @@ void dynamic_array_initialize(dynamic_array **arr);
  * @param arr ponteiro de vetor dinâmico a ser modificado por referência
  * @param x elemento a ser inserido ao final do vetor dinâmico
  */
-void dynamic_array_push_back(dynamic_array **arr, int x);
+void dynamic_array_push_back(dynamic_array *arr, int x);
 
 /**
  * @brief Remove o elemento x ao final do vetor dinãmico arr. Para isto, 
@@ -27,7 +27,7 @@ void dynamic_array_push_back(dynamic_array **arr, int x);
  * 
  * @param arr ponteiro de vetor dinâmico a ser modificado por referência
  */
-void dynamic_array_pop_back(dynamic_array **arr);
+void dynamic_array_pop_back(dynamic_array *arr);
 
 /**
  * @brief Deleta o vetor dinãmico completamente da memória.
