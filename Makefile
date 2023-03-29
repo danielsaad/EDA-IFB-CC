@@ -15,18 +15,20 @@ test_src = $(wildcard testes/*.c)
 
 
 BINFOLDER:= bin
+SRCFOLDER:=exemplos
 SRC:=$(wildcard exemplos/*.c)
-BIN:= $(patsubst exemplos/%.c,$(BINFOLDER)/%,$(SRC))
+OBJ:=$(patsubst %.c,%.o,$(SRC))
+BIN:= $(patsubst $(SRCFOLDER)/%.c,$(BINFOLDER)/%,$(SRC))
 
 all: $(BUILD_FOLDER) $(LIB)
 
-examples: $(BINFOLDER) $(BIN)
+examples:  $(BINFOLDER) $(BIN)
 
-$(BIN): $(LIB)
+$(BINFOLDER)/%: $(SRCFOLDER)/%.c $(LIB) 
+	$(CC) $(CFLAGS) $^ -I$(INCLUDE_FOLDER)  $(LIB) -o $@
 
-
-bin/%: Exemplos/%.c
-	$(CC) $(CFLAGS) $^ -I./$(INCLUDE_FOLDER)  $(LIB) -o $@
+$(BUILD_FOLDER)/%.o: $(SRCFOLDER)/%.c $(LIB)
+	$(CC) $(CFLAGS) $^ -I$(INCLUDE_FOLDER)  $(LIB) -o $@
 
 $(BINFOLDER):
 	@mkdir -p bin

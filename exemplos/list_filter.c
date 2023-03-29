@@ -1,5 +1,5 @@
-#include "../Lista/list.h"
-#include "../Utils/alloc.h"
+#include "list.h"
+#include "alloc.h"
 #include <stdio.h>
 #include <string.h>
 

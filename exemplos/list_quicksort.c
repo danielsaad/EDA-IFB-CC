@@ -1,5 +1,5 @@
-#include "../Lista/list.h"
-#include "../Utils/alloc.h"
+#include "list.h"
+#include "alloc.h"
 #include <string.h>
 #include <stdio.h>
 int menor_igual(const void* d1,const void* d2){
