@@ -12,8 +12,8 @@ int main(void){
     srunner_add_suite(sr,make_queue_suite());
     srunner_add_suite(sr,make_priority_queue_suite());
     srunner_add_suite(sr,make_deque_suite());
-    srunner_add_suite(sr,make_list_suite());
-    srunner_add_suite(sr,make_dlist_suite());
+    srunner_add_suite(sr,make_generic_list_suite());
+    srunner_add_suite(sr,make_generic_dlist_suite());
     srunner_add_suite(sr,make_sorting_suite());
     srunner_add_suite(sr,make_bst_suite());
     srunner_add_suite(sr,make_avl_tree_suite());
