@@ -1,5 +1,5 @@
-#ifndef dlist_H_INCLUDED
-#define dlist_H_INCLUDED
+#ifndef GENERIC_LIST_H_INCLUDED
+#define GENERIC_LIST_H_INCLUDED
 
 #include <stdlib.h>
 

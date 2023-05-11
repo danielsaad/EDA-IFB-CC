@@ -1,6 +1,6 @@
 #include <check.h>
 #include "alloc.h"
-#include "list.h"
+#include "generic_list.h"
 
 
 static const int N = 10000;
@@ -31,8 +31,8 @@ static void teardown(void){
 }
 
 START_TEST(test_list_empty){
-    list_t* l;
-    list_initialize(&l,int_constructor,int_destructor);
+    generic_list_t* l;
+    generic_list_initialize(&l,int_constructor,int_destructor);
     ck_assert(list_empty(l));
     list_delete(&l);
 }
@@ -41,8 +41,8 @@ END_TEST
 
 
 START_TEST(test_list_initialization){
-    list_t* l;
-    list_initialize(&l,int_constructor,int_destructor);
+    generic_list_t* l;
+    generic_list_initialize(&l,int_constructor,int_destructor);
     ck_assert(list_empty(l));
     ck_assert(list_size(l)==0);
     ck_assert(l->head == NULL);
@@ -54,8 +54,8 @@ END_TEST
 
 
 START_TEST(test_list_prepend){
-    list_t* l;
-    list_initialize(&l,int_constructor,int_destructor);
+    generic_list_t* l;
+    generic_list_initialize(&l,int_constructor,int_destructor);
     int i;
     for(i=0;i<N;i++){
         list_prepend(l,&v[i]);
@@ -71,8 +71,8 @@ END_TEST
 
 
 START_TEST(test_list_append){
-    list_t* l;
-    list_initialize(&l,int_constructor,int_destructor);
+    generic_list_t* l;
+    generic_list_initialize(&l,int_constructor,int_destructor);
     int i;
     for(i=0;i<N;i++){
         list_append(l,&v[i]);
@@ -87,9 +87,9 @@ START_TEST(test_list_append){
 END_TEST
 
 
-START_TEST(test_list_tail){
-    list_t* l;
-    list_initialize(&l,int_constructor,int_destructor);
+START_TEST(test_generic_list_tail){
+    generic_list_t* l;
+    generic_list_initialize(&l,int_constructor,int_destructor);
     int i;
     for(i=0;i<N;i++){
         list_append(l,&v[i]);
@@ -104,8 +104,8 @@ START_TEST(test_list_tail){
 END_TEST
 
 START_TEST(test_list_access){
-    list_t* l;
-    list_initialize(&l,int_constructor,int_destructor);
+    generic_list_t* l;
+    generic_list_initialize(&l,int_constructor,int_destructor);
     int i;
     for(i=0;i<N;i++){
         list_append(l,&v[i]);
@@ -121,8 +121,8 @@ END_TEST
 
 
 START_TEST(test_list_remove_generic_head){
-    list_t* l;
-    list_initialize(&l,int_constructor,int_destructor);
+    generic_list_t* l;
+    generic_list_initialize(&l,int_constructor,int_destructor);
     int i;
     for(i=0;i<N;i++){
         list_append(l,&v[i]);
@@ -138,8 +138,8 @@ END_TEST
 
 
 START_TEST(test_list_remove_generic_tail){
-    list_t* l;
-    list_initialize(&l,int_constructor,int_destructor);
+    generic_list_t* l;
+    generic_list_initialize(&l,int_constructor,int_destructor);
     int i;
     for(i=0;i<N;i++){
         list_append(l,&v[i]);
@@ -155,8 +155,8 @@ END_TEST
 
 
 START_TEST(test_list_remove_generic){
-    list_t* l;
-    list_initialize(&l,int_constructor,int_destructor);
+    generic_list_t* l;
+    generic_list_initialize(&l,int_constructor,int_destructor);
     int i;
     for(i=0;i<N;i++){
         list_append(l,&v[i]);
@@ -184,7 +184,7 @@ Suite* make_list_suite(void){
     tcase_add_test(test_cases,test_list_initialization);
     tcase_add_test(test_cases,test_list_prepend);
     tcase_add_test(test_cases,test_list_append);
-    tcase_add_test(test_cases,test_list_tail);
+    tcase_add_test(test_cases,test_generic_list_tail);
     tcase_add_test(test_cases,test_list_access);
     tcase_add_test(test_cases,test_list_remove_generic_head);
     tcase_add_test(test_cases,test_list_remove_generic_tail);
