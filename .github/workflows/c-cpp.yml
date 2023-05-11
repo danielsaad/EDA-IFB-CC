@@ -8,16 +8,18 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
+    - name: install_check
+      run: sudo apt-get install check
     - name: make
       run: make && make examples 
   test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: install_check
+      run: sudo apt-get install check
     - name: test
       run: make test
