@@ -1,8 +1,10 @@
 #ifndef TEST_H
 #define TEST_H
 
+#include <check.h>
+
 Suite* make_dynamic_array_suite(void);
-Suite* make_stack_suite(void);
+Suite* make_generic_stack_suite(void);
 Suite* make_queue_suite(void);
 Suite* make_priority_queue_suite(void);
 Suite* make_deque_suite(void);

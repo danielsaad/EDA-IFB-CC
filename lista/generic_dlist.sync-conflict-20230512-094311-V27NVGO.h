@@ -61,4 +61,4 @@ size_t generic_dlist_empty(generic_dlist_t* l);
 /*Operações sobre iterators*/
 void* generic_dlist_iterator_data(generic_dlist_iterator_t it);
 
-#endif // GENERIC_DLIST_H_INCLUDED
+#endif // generic_dlist_H_INCLUDED

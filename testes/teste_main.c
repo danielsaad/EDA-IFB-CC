@@ -8,7 +8,7 @@ int main(void){
     int number_failed;
     SRunner *sr;
     sr = srunner_create(make_dynamic_array_suite());
-    srunner_add_suite(sr,make_stack_suite());    
+    srunner_add_suite(sr,make_generic_stack_suite());    
     srunner_add_suite(sr,make_queue_suite());
     srunner_add_suite(sr,make_priority_queue_suite());
     srunner_add_suite(sr,make_deque_suite());
