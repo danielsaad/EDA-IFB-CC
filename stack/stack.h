@@ -1,6 +1,6 @@
 #ifndef STACK_H_INCLUDED
 #define STACK_H_INCLUDED
-#include "../vetor-dinamico/dynamic_array.h"
+#include "../dynamic_array/dynamic_array.h"
 #include <stdbool.h>
 
 typedef struct stack_t {

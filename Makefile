@@ -7,16 +7,16 @@ BUILD_FOLDER:= objects
 LIB_FOLDER:=lib
 INCLUDE_FOLDER:=include
 LIB=$(LIB_FOLDER)/libeda.a
-LIBSRC=$(wildcard arvore/*.c) $(wildcard fila/*.c)  $(wildcard lista/*.c)  $(wildcard ordenacao/*.c)  $(wildcard pilha/*.c) $(wildcard utils/*.c) $(wildcard vetor-dinamico/*.c)  
-LIBHEAD=$(wildcard arvore/*.h)  $(wildcard fila/*.h)  $(wildcard lista/*.h)  $(wildcard ordenacao/*.h)  $(wildcard pilha/*.h) $(wildcard utils/*.h) $(wildcard vetor-dinamico/*.h) 
+LIBSRC=$(wildcard tree/*.c) $(wildcard queue/*.c)  $(wildcard list/*.c)  $(wildcard sorting/*.c)  $(wildcard stack/*.c) $(wildcard utils/*.c) $(wildcard dynamic_array/*.c)  
+LIBHEAD=$(wildcard tree/*.h)  $(wildcard queue/*.h)  $(wildcard list/*.h)  $(wildcard sorting/*.h)  $(wildcard stack/*.h) $(wildcard utils/*.h) $(wildcard dynamic_array/*.h) 
 LIBOBJ = $(patsubst %.c,$(BUILD_FOLDER)/%.o,$(LIBSRC))
 
-test_src = $(wildcard testes/*.c)
+test_src = $(wildcard test/*.c)
 
 
 BINFOLDER:= bin
-SRCFOLDER:=exemplos
-SRC:=$(wildcard exemplos/*.c)
+SRCFOLDER:=examples
+SRC:=$(wildcard $(EXAMPLE_FOLDER)/*.c)
 OBJ:=$(patsubst %.c,%.o,$(SRC))
 BIN:= $(patsubst $(SRCFOLDER)/%.c,$(BINFOLDER)/%,$(SRC))
 
@@ -54,9 +54,9 @@ $(BUILD_FOLDER)/%.o: %.c %.h
 
 
 test: $(test_src) $(LIB) 
-	$(CC) $(CFLAGS) $^ -I$(INCLUDE_FOLDER) -o  testes/main  -pthread -lcheck -pthread -lrt -lm -lsubunit
+	$(CC) $(CFLAGS) $^ -I$(INCLUDE_FOLDER) -o  test/main  -pthread -lcheck -pthread -lrt -lm -lsubunit
 	@echo "Running Tests"
-	./testes/main
+	./test/main
 
 .PHONY: clean
 clean:
