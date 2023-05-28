@@ -5,9 +5,9 @@
 
 Suite* make_dynamic_array_suite(void);
 Suite* make_generic_stack_suite(void);
-Suite* make_queue_suite(void);
-Suite* make_priority_queue_suite(void);
-Suite* make_deque_suite(void);
+Suite* make_generic_queue_suite(void);
+Suite* make_generic_priority_queue_suite(void);
+Suite* make_generic_deque_suite(void);
 Suite* make_generic_list_suite(void);
 Suite* make_generic_dlist_suite(void);
 Suite* make_sorting_suite(void);

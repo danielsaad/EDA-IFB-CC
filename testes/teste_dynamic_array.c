@@ -6,7 +6,7 @@
 static const int N = 1000000;
 
 START_TEST(test_dynamic_array_initialize) {
-    dynamic_array *arr;
+    dynamic_array_t *arr;
     dynamic_array_initialize(&arr);
     ck_assert(arr->size == 0);
     ck_assert(arr->capacity == 4);
@@ -16,7 +16,7 @@ START_TEST(test_dynamic_array_initialize) {
 END_TEST
 
 START_TEST(test_dynamic_array_delete) {
-    dynamic_array *arr;
+    dynamic_array_t *arr;
     dynamic_array_initialize(&arr);
     dynamic_array_delete(&arr);
     ck_assert(arr == NULL);
@@ -24,7 +24,7 @@ START_TEST(test_dynamic_array_delete) {
 END_TEST
 
 START_TEST(test_dynamic_array_crud) {
-    dynamic_array *arr;
+    dynamic_array_t *arr;
     dynamic_array_initialize(&arr);
     int *arr_copy = mallocx(sizeof(int) * N);
     for (int i = 0; i < N; i++) {

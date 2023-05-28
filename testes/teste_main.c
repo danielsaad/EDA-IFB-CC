@@ -9,9 +9,9 @@ int main(void){
     SRunner *sr;
     sr = srunner_create(make_dynamic_array_suite());
     srunner_add_suite(sr,make_generic_stack_suite());    
-    srunner_add_suite(sr,make_queue_suite());
-    srunner_add_suite(sr,make_priority_queue_suite());
-    srunner_add_suite(sr,make_deque_suite());
+    srunner_add_suite(sr,make_generic_queue_suite());
+    srunner_add_suite(sr,make_generic_priority_queue_suite());
+    srunner_add_suite(sr,make_generic_deque_suite());
     srunner_add_suite(sr,make_generic_list_suite());
     srunner_add_suite(sr,make_generic_dlist_suite());
     srunner_add_suite(sr,make_sorting_suite());
