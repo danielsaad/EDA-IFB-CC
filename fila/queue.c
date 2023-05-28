@@ -1,66 +1,78 @@
-#include <stdlib.h>
-#include <assert.h>
 #include "queue.h"
 #include "../utils/alloc.h"
+#include <assert.h>
 
-/**Inicializa a fila**/
-void queue_initialize(queue_t** q,queue_node_constructor_fn constructor,
-                      queue_node_destructor_fn destructor){
+void queue_initialize(queue_t **q) {
     (*q) = mallocx(sizeof(queue_t));
-    (*q)->back = NULL;
-    (*q)->front = NULL;
+    (*q)->front = 0;
+    (*q)->back = 3;
     (*q)->size = 0;
-    (*q)->constructor = constructor;
-    (*q)->destructor = destructor;
+    (*q)->capacity = 4;
+    (*q)->queue = mallocx(sizeof(int) * 4);
 }
 
-void queue_delete(queue_t** q){
-    while(!queue_empty(*q)){
-        queue_pop(*q);
-    }
+void queue_delete(queue_t **q) {
+    free((*q)->queue);
     free(*q);
     *q = NULL;
 }
 
-/**Retira o elemento da frente da fila**/
-void queue_pop(queue_t* q){
-    assert(!queue_empty(q));
-    queue_iterator_t it = q->front;
-    if(queue_size(q)==1){
-        q->front = NULL;
-        q->back = NULL;
+void queue_push(queue_t *q, int data) {
+    if (q->size == q->capacity) {
+        size_t old_capacity = q->capacity;
+        q->capacity *= 2;
+        q->queue = reallocx(q->queue, sizeof(int) * q->capacity);
+        if (q->front > q->back) {
+            for (size_t i = q->front; i < old_capacity; i++) {
+                q->queue[i + old_capacity] = q->queue[i];
+            }
+            q->front = q->front + old_capacity;
+        }
     }
-    else{
-        q->front = q->front->next;
-    }
-    q->destructor(it->data);
-    free(it);
-    q->size--;
-}
-
-void* queue_front(queue_t* q){
-    assert(!queue_empty(q));
-    return(q->front->data);
-}
-
-void queue_push(queue_t* q,void* data){
-    queue_node_t* new_node = mallocx(sizeof(queue_node_t));
-    new_node->data = q->constructor(data);
-    new_node->next = NULL;
-    if(queue_size(q)==0){
-        q->front = new_node;
-    }
-    else{
-        q->back->next = new_node;
-    }
-    q->back = new_node;
+    q->back++;
+    if (q->back == q->capacity)
+        q->back = 0;
+    q->queue[q->back] = data;
     q->size++;
 }
 
-size_t queue_size(queue_t* q){
-    return(q->size);
+void queue_pop(queue_t *q) {
+    assert(q->size > 0);
+    if (q->size == q->capacity / 4 && q->capacity > 4) {
+        size_t new_capacity = q->capacity / 2;
+        if (q->front <= q->back) {
+            for (size_t i = q->front, j = 0; i <= q->back; i++, j++) {
+                q->queue[j] = q->queue[i];
+            }
+        } else {
+            size_t front_len = q->capacity - q->front;
+            for (int i = q->back; i >= 0; i--) {
+                q->queue[i + front_len] = q->queue[i];
+            }
+            for (size_t i = q->front, j = 0; i < q->capacity; i++, j++) {
+                q->queue[j] = q->queue[i];
+            }
+        }
+        q->front = 0;
+        q->back = q->size - 1;
+        q->capacity = new_capacity;
+        q->queue = reallocx(q->queue, q->capacity * sizeof(int));
+    }
+    q->front++;
+    q->size--;
+    if (q->front == q->capacity)
+        q->front = 0;
 }
 
-size_t queue_empty(queue_t *q){
-    return queue_size(q)==0 ? 1 : 0;
+int queue_front(queue_t *q) {
+    assert(q->front < q->capacity);
+    return q->queue[q->front];
+}
+
+size_t queue_size(queue_t *q) {
+    return q->size;
+}
+
+bool queue_empty(queue_t *q) {
+    return queue_size(q) == 0;
 }

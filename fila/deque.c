@@ -1,110 +1,126 @@
-#include <assert.h>
-#include "../utils/alloc.h"
 #include "deque.h"
+#include "../utils/alloc.h"
+#include <assert.h>
 
-/**Inicializa o deque**/
-void deque_initialize(deque_t** d,deque_node_constructor_fn constructor,
-                      deque_node_destructor_fn destructor){
-    (*d) = mallocx(sizeof(deque_t));
-    (*d)->front = NULL;
-    (*d)->back = NULL;
-    (*d)->constructor = constructor;
-    (*d)->destructor = destructor;
-    (*d)->size = 0;
+void deque_initialize(deque_t **q) {
+    (*q) = mallocx(sizeof(deque_t));
+    (*q)->front = 0;
+    (*q)->back = 3;
+    (*q)->size = 0;
+    (*q)->capacity = 4;
+    (*q)->deque = mallocx(sizeof(int) * 4);
 }
 
-/**Deleta o deque**/
-void deque_delete(deque_t** d){
-    while(!deque_empty(*d)){
-        deque_pop_front(*d);
-    }
-    free(*d);
-    (*d) = NULL;
+void deque_delete(deque_t **q) {
+    free((*q)->deque);
+    free(*q);
+    *q = NULL;
 }
 
-/**Insere um elemento no início do deque**/
-void deque_push_front(deque_t* d,void* data){
-    deque_node_t* new_node = mallocx(sizeof(deque_node_t));
-    new_node->data = d->constructor(data);
-    new_node->next = d->front;
-    new_node->prev = NULL;
-    if(deque_empty(d)){
-        d->back = new_node;
+void deque_push_back(deque_t *q, int data) {
+    if (q->size == q->capacity) {
+        size_t old_capacity = q->capacity;
+        q->capacity *= 2;
+        q->deque = reallocx(q->deque, sizeof(int) * q->capacity);
+        if (q->front > q->back) {
+            for (size_t i = q->front; i < old_capacity; i++) {
+                q->deque[i + old_capacity] = q->deque[i];
+            }
+            q->front = q->front + old_capacity;
+        }
     }
-    else{
-        d->front->prev = new_node;
-    }
-    d->front = new_node;
-    d->size++;
+    q->back++;
+    if (q->back == q->capacity)
+        q->back = 0;
+    q->deque[q->back] = data;
+    q->size++;
 }
 
-
-/**Insere o elemento no final do deque**/
-void deque_push_back(deque_t* d,void* data){
-    deque_node_t* new_node = mallocx(sizeof(deque_node_t));
-    new_node->data = d->constructor(data);
-    new_node->next = NULL;
-    new_node->prev = d->back;
-    if(deque_empty(d)){
-        d->front = new_node;
+void deque_push_front(deque_t *q, int data) {
+    if (q->size == q->capacity) {
+        size_t old_capacity = q->capacity;
+        q->capacity *= 2;
+        q->deque = reallocx(q->deque, sizeof(int) * q->capacity);
+        if (q->front > q->back) {
+            for (size_t i = q->front; i < old_capacity; i++) {
+                q->deque[i + old_capacity] = q->deque[i];
+            }
+            q->front = q->front + old_capacity;
+        }
     }
-    else{
-        d->back->next = new_node;
-    }
-    d->back = new_node;
-    d->size++;
+    q->front = q->front == 0? q->capacity-1 : q->front -1;
+    q->deque[q->front] = data;
+    q->size++;
 }
 
-/**Retira um elemento do início do deque**/
-void deque_pop_front(deque_t* d){
-    assert(!deque_empty(d));
-    deque_iterator_t it = d->front;
-    d->front = d->front->next;
-    if(deque_size(d)==1){
-        d->back = NULL;
+void deque_pop_front(deque_t *q) {
+    assert(q->size > 0);
+    if (q->size == q->capacity / 4 && q->capacity > 4) {
+        size_t new_capacity = q->capacity / 2;
+        if (q->front <= q->back) {
+            for (size_t i = q->front, j = 0; i <= q->back; i++, j++) {
+                q->deque[j] = q->deque[i];
+            }
+        } else {
+            size_t front_len = q->capacity - q->front;
+            for (int i = q->back; i >= 0; i--) {
+                q->deque[i + front_len] = q->deque[i];
+            }
+            for (size_t i = q->front, j = 0; i < q->capacity; i++, j++) {
+                q->deque[j] = q->deque[i];
+            }
+        }
+        q->front = 0;
+        q->back = q->size - 1;
+        q->capacity = new_capacity;
+        q->deque = reallocx(q->deque, q->capacity * sizeof(int));
     }
-    else{
-        d->front->prev = NULL;
+    q->front++;
+    q->size--;
+    if (q->front == q->capacity)
+        q->front = 0;
+}
+
+void deque_pop_back(deque_t *q) {
+    assert(q->size > 0);
+    if (q->size == q->capacity / 4 && q->capacity > 4) {
+        size_t new_capacity = q->capacity / 2;
+        if (q->front <= q->back) {
+            for (size_t i = q->front, j = 0; i <= q->back; i++, j++) {
+                q->deque[j] = q->deque[i];
+            }
+        } else {
+            size_t front_len = q->capacity - q->front;
+            for (int i = q->back; i >= 0; i--) {
+                q->deque[i + front_len] = q->deque[i];
+            }
+            for (size_t i = q->front, j = 0; i < q->capacity; i++, j++) {
+                q->deque[j] = q->deque[i];
+            }
+        }
+        q->front = 0;
+        q->back = q->size - 1;
+        q->capacity = new_capacity;
+        q->deque = reallocx(q->deque, q->capacity * sizeof(int));
     }
-    d->destructor(it->data);
-    free(it);
-    d->size--;
+    q->back = q->back == 0? q->capacity-1 : q->back -1;
+    q->size--;
 }
 
-/**Retira um elemento do final do deque**/
-void deque_pop_back(deque_t* d){
-    assert(!deque_empty(d));
-    deque_iterator_t it = d->back;
-    d->back = d->back->prev;
-    if(deque_size(d)==1){
-        d->front = NULL;
-    }
-    else{
-        d->back->next = NULL;
-    }
-    d->destructor(it->data);
-    free(it);
-    d->size--;
+int deque_front(deque_t *q) {
+    assert(q->front < q->capacity);
+    return q->deque[q->front];
 }
 
-/**Retorna o elemento do íncio do deque**/
-void* deque_front(deque_t* d){
-    assert(!deque_empty(d));
-    return(d->front->data);
+int deque_back(deque_t *q) {
+    assert(q->front < q->capacity);
+    return q->deque[q->back];
 }
 
-/**Retorna o elemento do final do deque**/
-void* deque_back(deque_t* d){
-    assert(!deque_empty(d));
-    return(d->back->data);
+size_t deque_size(deque_t *q) {
+    return q->size;
 }
 
-/**Retorna o tamanho do deque**/
-size_t deque_size(deque_t* d){
-    return d->size;
-}
-
-/**Retorna se o deque está vazio ou não**/
-size_t deque_empty(deque_t* d){
-    return deque_size(d) == 0  ? 1 : 0;
+bool deque_empty(deque_t *q) {
+    return deque_size(q) == 0;
 }

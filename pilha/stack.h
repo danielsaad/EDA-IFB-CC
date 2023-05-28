@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 typedef struct stack_t {
-    dynamic_array *stack_array;
+    dynamic_array_t *stack_array;
 } stack_t;
 
 void stack_initialize(stack_t **stack);
