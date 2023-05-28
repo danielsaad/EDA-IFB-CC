@@ -1,75 +1,19 @@
+#include "alloc.h"
+#include "queue.h"
 #include <stdio.h>
 #include <string.h>
-#include "queue.h"
-#include "alloc.h"
 
-typedef struct pessoa{
-    char nome[30];
-    char cpf[20];
-    int idade;
-}pessoa;
-
-void* constructor_pessoa(void* data){
-    void* ptr = mallocx(sizeof(pessoa));
-    memcpy(ptr,data,sizeof(pessoa));
-    return ptr;
-}
-
-void my_getline(char* str,size_t size){
+int main(void) {
     int i;
-    char c;
-    for(i=0;i<size-1;i++){
-        c = getchar();
-        if(c=='\n'){
-            str[i] = '\0';
-            break;
-        }
-        str[i] = c;
+    queue_t *q;
+    queue_initialize(&q);
+    for (i = 0; i < 16; i++) {
+        printf("Inserindo %d\n", i);
+        queue_push(q, i);
     }
-    str[size-1]='\0';
-    while(c!='\n'){
-        c = getchar();
-    }
-}
-
-void destructor_pessoa(void* data){
-    free(data);
-}
-
-void cadastra_pessoa(pessoa* p){
-    printf("Nome: ");
-    my_getline(p->nome,30);
-    printf("CPF: ");
-    my_getline(p->cpf,20);
-    printf("Idade: ");
-    scanf("%d%*c",&p->idade);
-}
-
-void imprime_pessoa(const pessoa* p){
-    printf("Nome: ");
-    printf("%s\n",p->nome);
-    printf("CPF: ");
-    printf("%s\n",p->cpf);
-    printf("Idade: ");
-    printf("%d\n",p->idade);
-}
-
-int main(void){
-    int i;
-    queue_t* q;
-    pessoa p;
-    queue_initialize(&q,constructor_pessoa,destructor_pessoa);
-    for(i=0;i<5;i++){
-        printf("Cadastrando pessoa %d\n",i+1);
-        cadastra_pessoa(&p);
-        queue_push(q,&p);
-    }
-    while(!queue_empty(q)){
-        printf("\n**Imprimindo pessoa**\n");
-        p =  *(pessoa*) queue_front(q);
+    while (!queue_empty(q)) {
+        printf("Retirando %d\n", queue_front(q));
         queue_pop(q);
-        imprime_pessoa(&p);
-        printf("\n");
     }
     queue_delete(&q);
     return 0;

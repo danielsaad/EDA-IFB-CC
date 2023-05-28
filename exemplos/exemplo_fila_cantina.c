@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "queue.h"
+#include "generic_queue.h"
 #include "alloc.h"
 
 
@@ -31,22 +31,22 @@ void le_aluno(aluno* a){
     scanf("%lf",&(a->conta));
 }
 
-void insere_aluno(queue_t* q,aluno* a){
-    queue_push(q,a);
+void insere_aluno(generic_queue_t* q,aluno* a){
+    generic_queue_push(q,a);
 }
 
-void atende_aluno(queue_t* q){
-    aluno a = *(aluno*) queue_front(q);
+void atende_aluno(generic_queue_t* q){
+    aluno a = *(aluno*) generic_queue_front(q);
     printf("Atendendo aluno.\n");
     printf("Nome = %s\n",a.nome);
     printf("Idade = %d\n",a.idade);
     printf("Conta = %lf\n",a.conta);
-    queue_pop(q);
+    generic_queue_pop(q);
 }
 
 int main(void){
-    queue_t* fila;
-    queue_initialize(&fila,construtor_aluno,destructor_aluno);
+    generic_queue_t* fila;
+    generic_queue_initialize(&fila,construtor_aluno,destructor_aluno);
     while(1){
         int opcao;
         printf("Tia sandra, qual é a opção: ");

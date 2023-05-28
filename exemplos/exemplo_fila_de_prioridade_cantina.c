@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "priority_queue.h"
+#include "generic_priority_queue.h"
 #include "alloc.h"
 
 typedef struct pessoa{
@@ -44,22 +44,22 @@ void le_pessoa(pessoa* p){
     scanf("%s",p->curso);
 }
 
-void insere_pessoa(priority_queue_t* pq,pessoa* p){
-    priority_queue_push(pq,p);
+void insere_pessoa(generic_priority_queue_t* pq,pessoa* p){
+    generic_priority_queue_push(pq,p);
 }
 
-void atende_pessoa(priority_queue_t* pq){
-    pessoa p = *(pessoa*) priority_queue_front(pq);
+void atende_pessoa(generic_priority_queue_t* pq){
+    pessoa p = *(pessoa*) generic_priority_queue_front(pq);
     printf("Atendendo pessoa.\n");
     printf("Nome = %s\n",p.nome);
     printf("Professor = %d\n",p.professor);
     printf("Curso = %s\n",p.curso);
-    priority_queue_pop(pq);
+    generic_priority_queue_pop(pq);
 }
 
 int main(void){
-    priority_queue_t* fila_de_prioridade;
-    priority_queue_initialize(&fila_de_prioridade,
+    generic_priority_queue_t* fila_de_prioridade;
+    generic_priority_queue_initialize(&fila_de_prioridade,
         construtor_pessoa,
         destructor_pessoa,
         comparator_pessoa);

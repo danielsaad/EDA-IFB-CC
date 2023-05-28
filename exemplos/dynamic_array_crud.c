@@ -4,7 +4,7 @@
 static const int N = 1000000;
 
 int main(void) {
-    dynamic_array *arr;
+    dynamic_array_t *arr;
     dynamic_array_initialize(&arr);
     for (int i = 0; i < N; i++) {
         int value = rand();
