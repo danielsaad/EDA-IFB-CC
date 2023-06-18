@@ -2,125 +2,111 @@
 #include "../utils/alloc.h"
 #include <assert.h>
 
-void deque_initialize(deque_t **q) {
-    (*q) = mallocx(sizeof(deque_t));
-    (*q)->front = 0;
-    (*q)->back = 3;
-    (*q)->size = 0;
-    (*q)->capacity = 4;
-    (*q)->deque = mallocx(sizeof(int) * 4);
+static void deque_expand(deque_t *d);
+static void deque_shrink(deque_t *d);
+
+static void deque_expand(deque_t *d) {
+    size_t old_capacity = d->capacity;
+    d->capacity *= 2;
+    d->deque = reallocx(d->deque, sizeof(int) * d->capacity);
+    if (d->front > d->back) {
+        for (size_t i = d->front; i < old_capacity; i++) {
+            d->deque[i + old_capacity] = d->deque[i];
+        }
+        d->front = d->front + old_capacity;
+    }
 }
 
-void deque_delete(deque_t **q) {
-    free((*q)->deque);
-    free(*q);
-    *q = NULL;
-}
-
-void deque_push_back(deque_t *q, int data) {
-    if (q->size == q->capacity) {
-        size_t old_capacity = q->capacity;
-        q->capacity *= 2;
-        q->deque = reallocx(q->deque, sizeof(int) * q->capacity);
-        if (q->front > q->back) {
-            for (size_t i = q->front; i < old_capacity; i++) {
-                q->deque[i + old_capacity] = q->deque[i];
-            }
-            q->front = q->front + old_capacity;
+static void deque_shrink(deque_t *d) {
+    size_t new_capacity = d->capacity / 2;
+    if (d->front <= d->back) {
+        for (size_t i = d->front, j = 0; i <= d->back; i++, j++) {
+            d->deque[j] = d->deque[i];
+        }
+    } else {
+        size_t front_len = d->capacity - d->front;
+        for (int i = d->back; i >= 0; i--) {
+            d->deque[i + front_len] = d->deque[i];
+        }
+        for (size_t i = d->front, j = 0; i < d->capacity; i++, j++) {
+            d->deque[j] = d->deque[i];
         }
     }
-    q->back++;
-    if (q->back == q->capacity)
-        q->back = 0;
-    q->deque[q->back] = data;
-    q->size++;
+    d->front = 0;
+    d->back = d->size - 1;
+    d->capacity = new_capacity;
+    d->deque = reallocx(d->deque, d->capacity * sizeof(int));
 }
 
-void deque_push_front(deque_t *q, int data) {
-    if (q->size == q->capacity) {
-        size_t old_capacity = q->capacity;
-        q->capacity *= 2;
-        q->deque = reallocx(q->deque, sizeof(int) * q->capacity);
-        if (q->front > q->back) {
-            for (size_t i = q->front; i < old_capacity; i++) {
-                q->deque[i + old_capacity] = q->deque[i];
-            }
-            q->front = q->front + old_capacity;
-        }
+void deque_initialize(deque_t **d) {
+    (*d) = mallocx(sizeof(deque_t));
+    (*d)->front = 0;
+    (*d)->back = 3;
+    (*d)->size = 0;
+    (*d)->capacity = 4;
+    (*d)->deque = mallocx(sizeof(int) * 4);
+}
+
+void deque_delete(deque_t **d) {
+    free((*d)->deque);
+    free(*d);
+    *d = NULL;
+}
+
+void deque_push_back(deque_t *d, int data) {
+    if (d->size == d->capacity) {
+        deque_expand(d);
     }
-    q->front = q->front == 0? q->capacity-1 : q->front -1;
-    q->deque[q->front] = data;
-    q->size++;
+    d->back++;
+    if (d->back == d->capacity)
+        d->back = 0;
+    d->deque[d->back] = data;
+    d->size++;
 }
 
-void deque_pop_front(deque_t *q) {
-    assert(q->size > 0);
-    if (q->size == q->capacity / 4 && q->capacity > 4) {
-        size_t new_capacity = q->capacity / 2;
-        if (q->front <= q->back) {
-            for (size_t i = q->front, j = 0; i <= q->back; i++, j++) {
-                q->deque[j] = q->deque[i];
-            }
-        } else {
-            size_t front_len = q->capacity - q->front;
-            for (int i = q->back; i >= 0; i--) {
-                q->deque[i + front_len] = q->deque[i];
-            }
-            for (size_t i = q->front, j = 0; i < q->capacity; i++, j++) {
-                q->deque[j] = q->deque[i];
-            }
-        }
-        q->front = 0;
-        q->back = q->size - 1;
-        q->capacity = new_capacity;
-        q->deque = reallocx(q->deque, q->capacity * sizeof(int));
+void deque_push_front(deque_t *d, int data) {
+    if (d->size == d->capacity) {
+        deque_expand(d);
     }
-    q->front++;
-    q->size--;
-    if (q->front == q->capacity)
-        q->front = 0;
+    d->front = d->front == 0 ? d->capacity - 1 : d->front - 1;
+    d->deque[d->front] = data;
+    d->size++;
 }
 
-void deque_pop_back(deque_t *q) {
-    assert(q->size > 0);
-    if (q->size == q->capacity / 4 && q->capacity > 4) {
-        size_t new_capacity = q->capacity / 2;
-        if (q->front <= q->back) {
-            for (size_t i = q->front, j = 0; i <= q->back; i++, j++) {
-                q->deque[j] = q->deque[i];
-            }
-        } else {
-            size_t front_len = q->capacity - q->front;
-            for (int i = q->back; i >= 0; i--) {
-                q->deque[i + front_len] = q->deque[i];
-            }
-            for (size_t i = q->front, j = 0; i < q->capacity; i++, j++) {
-                q->deque[j] = q->deque[i];
-            }
-        }
-        q->front = 0;
-        q->back = q->size - 1;
-        q->capacity = new_capacity;
-        q->deque = reallocx(q->deque, q->capacity * sizeof(int));
+void deque_pop_front(deque_t *d) {
+    assert(d->size > 0);
+    if (d->size == d->capacity / 4 && d->capacity > 4) {
+        deque_shrink(d);
     }
-    q->back = q->back == 0? q->capacity-1 : q->back -1;
-    q->size--;
+    d->front++;
+    d->size--;
+    if (d->front == d->capacity)
+        d->front = 0;
 }
 
-int deque_front(deque_t *q) {
-    assert(q->front < q->capacity);
-    return q->deque[q->front];
+void deque_pop_back(deque_t *d) {
+    if (d->size == d->capacity / 4 && d->capacity > 4) {
+        deque_shrink(d);
+    }
+    assert(d->size > 0);
+    d->back = d->back == 0 ? d->capacity - 1 : d->back - 1;
+    d->size--;
 }
 
-int deque_back(deque_t *q) {
-    assert(q->front < q->capacity);
-    return q->deque[q->back];
+int deque_front(deque_t *d) {
+    assert(d->front < d->capacity);
+    return d->deque[d->front];
 }
 
-size_t deque_size(deque_t *q) {
-    return q->size;
+int deque_back(deque_t *d) {
+    assert(d->front < d->capacity);
+    return d->deque[d->back];
 }
 
-bool deque_empty(deque_t *q) {
-    return deque_size(q) == 0;
+size_t deque_size(deque_t *d) {
+    return d->size;
+}
+
+bool deque_empty(deque_t *d) {
+    return deque_size(d) == 0;
 }

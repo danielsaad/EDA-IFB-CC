@@ -12,15 +12,15 @@ typedef struct deque_t {
     int *deque;
 } deque_t;
 
-void deque_initialize(deque_t **q);
-void deque_delete(deque_t **q);
-void deque_push_back(deque_t *q, int data);
-void deque_pop_back(deque_t *q);
-void deque_push_front(deque_t *q, int data);
-void deque_pop_front(deque_t *q);
-int deque_front(deque_t *q);
-int deque_back(deque_t *q);
-size_t deque_size(deque_t *q);
-bool deque_empty(deque_t *q);
+void deque_initialize(deque_t **d);
+void deque_delete(deque_t **d);
+void deque_push_back(deque_t *d, int data);
+void deque_pop_back(deque_t *d);
+void deque_push_front(deque_t *d, int data);
+void deque_pop_front(deque_t *d);
+int deque_front(deque_t *d);
+int deque_back(deque_t *d);
+size_t deque_size(deque_t *d);
+bool deque_empty(deque_t *d);
 
 #endif
