@@ -1,60 +1,25 @@
 #include "bst.h"
 #include "../utils/alloc.h"
+#include <assert.h>
 
-static bst_node_t *bst_insert_helper(bst_t *t, bst_node_t *v, void *data);
-
-static void bst_delete_helper(bst_t *t, bst_node_t *v);
-
-static int bst_find_helper(bst_t *t, bst_node_t *v, void *data);
-
-static bst_node_t *bst_remove_helper(bst_t *t, bst_node_t *v, void *data);
-
+static bst_node_t *bst_insert_helper(bst_node_t *v, int data);
+static void bst_delete_helper(bst_node_t *v);
+static bool bst_find_helper(bst_node_t *v, int data);
+static bst_node_t *bst_remove_helper(bst_node_t *v, int data);
 static bst_node_t *bst_find_rightmost(bst_node_t *v);
+static bst_node_t *bst_new_node(int data);
+static void bst_delete_node(bst_node_t *node);
 
-static bst_node_t *bst_new_node(void *data,
-                                bst_element_constructor_fn constructor);
-
-static void bst_delete_node(bst_node_t *node,
-                            bst_element_destructor_fn destructor);
-
-static void bst_delete_node(bst_node_t *node,
-                            bst_element_destructor_fn destructor) {
-    destructor(node->data);
+static void bst_delete_node(bst_node_t *node) {
     free(node);
 }
 
-static bst_node_t *bst_new_node(void *data,
-                                bst_element_constructor_fn constructor) {
+static bst_node_t *bst_new_node(int data) {
     bst_node_t *ptr = mallocx(sizeof(bst_node_t));
     ptr->left = NULL;
     ptr->right = NULL;
-    ptr->data = constructor(data);
+    ptr->data = data;
     return ptr;
-}
-
-void bst_initialize(bst_t **t, bst_element_constructor_fn constructor,
-                    bst_element_destructor_fn destructor,
-                    bst_tree_element_compare_fn comparator) {
-    (*t) = mallocx(sizeof(bst_t));
-    (*t)->root = NULL;
-    (*t)->size = 0;
-    (*t)->comparator = comparator;
-    (*t)->constructor = constructor;
-    (*t)->destructor = destructor;
-}
-
-void bst_delete(bst_t **t) {
-    bst_delete_helper((*t), (*t)->root);
-    free(*t);
-    (*t) = NULL;
-}
-
-static void bst_delete_helper(bst_t *t, bst_node_t *v) {
-    if (v != NULL) {
-        bst_delete_helper(t, v->left);
-        bst_delete_helper(t, v->right);
-        bst_delete_node(v, t->destructor);
-    }
 }
 
 static bst_node_t *bst_find_rightmost(bst_node_t *v) {
@@ -65,74 +30,84 @@ static bst_node_t *bst_find_rightmost(bst_node_t *v) {
     }
 }
 
-void bst_insert(bst_t *t, void *data) {
-    t->root = bst_insert_helper(t, t->root, data);
+void bst_initialize(bst_t **t) {
+    (*t) = mallocx(sizeof(bst_t));
+    (*t)->size = 0;
+    (*t)->root = NULL;
+}
+void bst_delete(bst_t **t) {
+    bst_delete_helper((*t)->root);
+    (*t)->root = NULL;
 }
 
-static bst_node_t *bst_insert_helper(bst_t *t, bst_node_t *v, void *data) {
-    if (v == NULL) {
-        t->size++;
-        v = bst_new_node(data, t->constructor);
-    } else if (t->comparator(data, v->data) < 0) {
-        v->left = bst_insert_helper(t, v->left, data);
-    } else {
-        v->right = bst_insert_helper(t, v->right, data);
+static void bst_delete_helper(bst_node_t *x) {
+    if (x != NULL) {
+        bst_delete_helper(x->left);
+        bst_delete_helper(x->right);
+        free(x);
     }
-    return v;
 }
 
-void bst_remove(bst_t *t, void *data) {
-    t->root = bst_remove_helper(t, t->root, data);
+void bst_insert(bst_t *t, int data) {
+    t->root = bst_insert_helper(t->root, data);
+    t->size++;
 }
 
-static bst_node_t *bst_remove_helper(bst_t *t, bst_node_t *v, void *data) {
-    if (v == NULL) {
-        return v;
-    } else if (t->comparator(data, v->data) < 0) {
-        v->left = bst_remove_helper(t, v->left, data);
-    } else if (t->comparator(data, v->data) > 0) {
-        v->right = bst_remove_helper(t, v->right, data);
-    } else { /*remoção do nó*/
-        /*caso 1 e caso 2, o nó é uma folha ou só tem um filho. Solução:
-         * transplantar*/
-        if (v->left == NULL) {
-            bst_node_t *tmp = v->right;
-            bst_delete_node(v, t->destructor);
-            t->size--;
-            return tmp;
-        } else if (v->right == NULL) {
-            bst_node_t *tmp = v->left;
-            bst_delete_node(v, t->destructor);
-            t->size--;
-            return tmp;
+bst_node_t *bst_insert_helper(bst_node_t *x, int data) {
+    if (x == NULL)
+        return bst_new_node(data);
+    assert(x->data != data);
+    if (data < x->data) {
+        x->left = bst_insert_helper(x->left, data);
+    } else {
+        x->right = bst_insert_helper(x->right, data);
+    }
+    return x;
+}
+
+void bst_remove(bst_t *t, int data) {
+    t->root = bst_remove_helper(t->root, data);
+    t->size--;
+}
+
+static bst_node_t *bst_remove_helper(bst_node_t *x, int data) {
+    assert(x != NULL);
+    if (data < x->data)
+        x->left = bst_remove_helper(x->left, data);
+    else if (data > x->data) {
+        x->right = bst_remove_helper(x->right, data);
+    } else {
+        if (x->left == NULL) {
+            bst_node_t *y = x->right;
+            bst_delete_node(x);
+            x = y;
+        } else if (x->right == NULL) {
+            bst_node_t *y = x->left;
+            bst_delete_node(x);
+            x = y;
         } else {
-            /*caso 3, o nó tem dois filhos: devemos o nó antecessor do
-             que queremos deletar e realizar o swap. 
-             Obrigatoriamente este nó cai no caso 1 ou caso 2.*/
-            bst_node_t *tmp = bst_find_rightmost(v->left);
-            void *swap = v->data;
-            v->data = tmp->data;
-            tmp->data = swap;
-            v->left = bst_remove_helper(t, v->left, tmp->data);
+            bst_node_t *previous_x = bst_find_rightmost(x->left);
+            int aux = x->data;
+            x->data = previous_x->data;
+            previous_x->data = aux;
+            x->left = bst_remove_helper(x->left, data);
         }
     }
-    return v;
+    return x;
 }
 
-int bst_find(bst_t *t, void *data) {
-    return bst_find_helper(t, t->root, data);
+bool bst_find(bst_t *t, int data) {
+    return bst_find_helper(t->root, data);
 }
 
-static int bst_find_helper(bst_t *t, bst_node_t *v, void *data) {
-    if (v == NULL) {
-        return 0;
-    }
-    if (t->comparator(data, v->data) < 0) {
-        return bst_find_helper(t, v->left, data);
-    } else if (t->comparator(data, v->data) > 0) {
-        return bst_find_helper(t, v->right, data);
-    }
-    return 1;
+static bool bst_find_helper(bst_node_t *x, int data) {
+    if (x == NULL)
+        return false;
+    if (data == x->data)
+        return true;
+    if (data < x->data)
+        return bst_find_helper(x->left, data);
+    return bst_find_helper(x->right, data);
 }
 
 size_t bst_size(bst_t *t) {
