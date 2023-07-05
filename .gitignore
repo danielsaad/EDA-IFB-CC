@@ -1,4 +1,6 @@
 bin/*
+include/*
 objects/*
-Testes/main
+lib/*
+test/main
 *a.out
