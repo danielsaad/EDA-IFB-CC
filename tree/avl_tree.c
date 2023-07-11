@@ -2,23 +2,19 @@
 #include "../utils/alloc.h"
 #include <assert.h>
 
-static void avl_tree_delete_node(avl_node_t *v,
-                                 avl_tree_element_destructor_fn destructor);
-static void avl_tree_delete_helper(avl_tree_t *t, avl_node_t *v);
+static void avl_tree_delete_node(avl_node_t *v);
+static void avl_tree_delete_helper(avl_node_t *v);
 
-static avl_node_t *avl_tree_insert_helper(avl_tree_t *t, avl_node_t *v,
-                                          void *data);
+static avl_node_t *avl_tree_insert_helper(avl_node_t *v, int data);
 
 static avl_node_t *avl_tree_remove_helper(avl_tree_t *t, avl_node_t *v,
-                                          void *data);
+                                          int data);
 
-static int avl_tree_find_helper(avl_tree_t *t, avl_node_t *v, void *data);
+static int avl_tree_find_helper(avl_node_t *v, int data);
 
-static void avl_tree_delete_node(avl_node_t *t,
-                                 avl_tree_element_destructor_fn destructor);
+static void avl_tree_delete_node(avl_node_t *v);
 
-static avl_node_t *avl_new_node(void *data,
-                                avl_tree_element_constructor_fn constructor);
+static avl_node_t *avl_new_node(int data);
 
 static size_t avl_node_get_height(avl_node_t *v);
 
@@ -100,47 +96,39 @@ static int avl_node_get_balance(avl_node_t *v) {
     return ((int)avl_node_get_height(v->left) - avl_node_get_height(v->right));
 }
 
-void avl_tree_initialize(avl_tree_t **t,
-                         avl_tree_element_constructor_fn constructor,
-                         avl_tree_element_destructor_fn destructor,
-                         avl_tree_element_compare_fn comparator) {
+void avl_tree_initialize(avl_tree_t **t) {
     (*t) = mallocx(sizeof(avl_tree_t));
     (*t)->root = NULL;
     (*t)->size = 0;
-    (*t)->constructor = constructor;
-    (*t)->destructor = destructor;
-    (*t)->comparator = comparator;
 }
 
 void avl_tree_delete(avl_tree_t **t) {
-    avl_tree_delete_helper((*t), (*t)->root);
+    avl_tree_delete_helper((*t)->root);
     free(*t);
     (*t) = NULL;
 }
 
-static void avl_tree_delete_helper(avl_tree_t *t, avl_node_t *v) {
+static void avl_tree_delete_helper(avl_node_t *v) {
     if (v != NULL) {
-        avl_tree_delete_helper(t, v->left);
-        avl_tree_delete_helper(t, v->right);
-        avl_tree_delete_node(v, t->destructor);
+        avl_tree_delete_helper(v->left);
+        avl_tree_delete_helper(v->right);
+        avl_tree_delete_node(v);
     }
 }
 
-static void avl_tree_delete_node(avl_node_t *t,
-                                 avl_tree_element_destructor_fn destructor) {
-    destructor(t->data);
+static void avl_tree_delete_node(avl_node_t *t) {
     free(t);
 }
 
 void avl_tree_insert(avl_tree_t *t, void *data) {
-    t->root = avl_tree_insert_helper(t, t->root, data);
+    t->root = avl_tree_insert_helper(t->root, data);
+    t->size++;
 }
 
-avl_node_t *avl_tree_insert_helper(avl_tree_t *t, avl_node_t *v, void *data) {
+avl_node_t *avl_tree_insert_helper(avl_node_t *v, int data) {
     if (v == NULL) {
-        v = avl_new_node(data, t->constructor);
-        t->size++;
-    } else if (t->comparator(data, v->data) < 0) {
+        v = avl_new_node(data);
+    } else if (data < v->data < 0) {
         v->left = avl_tree_insert_helper(t, v->left, data);
     } else {
         v->right = avl_tree_insert_helper(t, v->right, data);
@@ -200,7 +188,7 @@ avl_node_t *avl_tree_remove_helper(avl_tree_t *t, avl_node_t *v, void *data) {
             return tmp;
         }
         /*caso 3, o nó tem dois filhos: achar o nó antecessor do que
-           queremos deletar. Obrigatoriamente este nó é uma folha 
+           queremos deletar. Obrigatoriamente este nó é uma folha
            ou tem apenas um filho. Solução: colocar o valor da folha no
            nó atual  e proceder a deletar a folha*/
         else {

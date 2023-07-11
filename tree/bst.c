@@ -44,7 +44,7 @@ static void bst_delete_helper(bst_node_t *x) {
     if (x != NULL) {
         bst_delete_helper(x->left);
         bst_delete_helper(x->right);
-        free(x);
+        bst_delete_node(x);
     }
 }
 
