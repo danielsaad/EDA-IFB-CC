@@ -18,6 +18,7 @@ int main(void) {
     srunner_add_suite(sr, make_bst_suite());
     srunner_add_suite(sr, make_generic_bst_suite());
     srunner_add_suite(sr, make_avl_tree_suite());
+    srunner_add_suite(sr, make_generic_avl_tree_suite());
     srunner_add_suite(sr, make_treap_suite());
     srunner_set_fork_status(sr, CK_NOFORK);
     srunner_run_all(sr, CK_VERBOSE);

@@ -19,11 +19,11 @@ void avl_tree_initialize(avl_tree_t **t);
 
 void avl_tree_delete(avl_tree_t **t);
 
-void avl_tree_insert(avl_tree_t *t, void *data);
+void avl_tree_insert(avl_tree_t *t, int data);
 
-void avl_tree_remove(avl_tree_t *t, void *data);
+void avl_tree_remove(avl_tree_t *t, int data);
 
-bool avl_tree_find(avl_tree_t *t, void *data);
+bool avl_tree_find(avl_tree_t *t, int data);
 
 size_t avl_tree_size(avl_tree_t *t);
 

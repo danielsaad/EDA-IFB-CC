@@ -39,7 +39,8 @@ START_TEST(test_bst_find) {
     bst_initialize(&t);
     int i;
     for (i = 0; i < N; i++) {
-        bst_insert(t, v[i]);
+        if(!bst_find(t,v[i]))
+           bst_insert(t, v[i]);
     }
     for (i = 0; i < N; i++) {
         ck_assert(bst_find(t, v[i]));
@@ -53,7 +54,8 @@ START_TEST(test_bst_remove) {
     bst_initialize(&t);
     int i;
     for (i = 0; i < N; i++) {
-        bst_insert(t, v[i]);
+        if(!bst_find(t,v[i]))
+            bst_insert(t, v[i]);
     }
     for (i = 0; i < N; i++) {
         ck_assert(bst_find(t, v[i]));

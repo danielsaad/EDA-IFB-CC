@@ -37,7 +37,8 @@ void bst_initialize(bst_t **t) {
 }
 void bst_delete(bst_t **t) {
     bst_delete_helper((*t)->root);
-    (*t)->root = NULL;
+    free(*t);
+    (*t) = NULL;
 }
 
 static void bst_delete_helper(bst_node_t *x) {
