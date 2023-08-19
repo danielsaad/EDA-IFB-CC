@@ -1,8 +1,3 @@
-/**
- * Autor: Daniel Saad Nogueira Nunes
- * Comentários: Este programa aborda conceitos
- * básicos sobre ponteiros e deferência.
- **/
 #include <stdio.h>
 
 int main() {
@@ -21,5 +16,5 @@ int main() {
     /*Note que agora o novo valor de var é 1*/
     printf("Var = %d\n", var);
     printf("Var = %d\n", *ptr);
-    return (0);
+    return 0;
 }

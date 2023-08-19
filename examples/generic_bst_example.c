@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
-#include "bst.h"
+#include "generic_bst.h"
 #include "queue.h"
 #include "alloc.h"
 
@@ -29,7 +29,7 @@ int int_comparator(const void* a,const void* b){
     return 1;
 }
 
-void pre_order(bst_node_t* v){
+void pre_order(generic_bst_node_t* v){
     if(v!=NULL){
         printf("(%d",*(int*)v->data);
         pre_order(v->left);
@@ -40,7 +40,7 @@ void pre_order(bst_node_t* v){
 
 int main(void){
     int i;
-    bst_t* t;
+    generic_bst_t* t;
     srand(time(NULL));
     bst_initialize(&t,int_constructor,int_destructor,int_comparator);
     for(i=0;i<10;i++){

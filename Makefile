@@ -14,16 +14,17 @@ LIBOBJ = $(patsubst %.c,$(BUILD_FOLDER)/%.o,$(LIBSRC))
 test_src = $(wildcard test/*.c)
 
 
-BINFOLDER:= bin
+BINFOLDER:=bin
 SRCFOLDER:=examples
-SRC:=$(wildcard $(EXAMPLE_FOLDER)/*.c)
+SRC:=$(wildcard $(SRCFOLDER)/*.c)
 OBJ:=$(patsubst %.c,%.o,$(SRC))
 BIN:= $(patsubst $(SRCFOLDER)/%.c,$(BINFOLDER)/%,$(SRC))
 
 all: $(BUILD_FOLDER) $(LIB)
 
-examples:  $(BINFOLDER) $(BIN)
-
+.PHONY: examples
+examples:  $(BINFOLDER) $(BIN) $(SRC)
+	@echo "BIN: " $(BIN)
 $(BINFOLDER)/%: $(SRCFOLDER)/%.c $(LIB) 
 	$(CC) $(CFLAGS) $^ -I$(INCLUDE_FOLDER)  $(LIB) -o $@
 

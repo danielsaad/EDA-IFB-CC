@@ -36,7 +36,7 @@ void pre_order(bst_node_t* v){
 
 /**
  * Comandos:
- * i x - insere o inteiro x na árvore
+ * i x - insere o inteiro x na rvore
  * r x - remove o inteiro x da árvore
  * f x - procura o inteiro x na árvore
  * p - imprime a árvore em pré-ordem
@@ -47,20 +47,20 @@ int main(void){
     bst_t* t;
     char c;
     int i;
-    bst_initialize(&t,int_constructor,int_destructor,int_comparator);
+    bst_initialize(&t);
     do{
         scanf("%c",&c);
         if(c=='i'){
             scanf("%d",&i);
-            bst_insert(t,&i);
+            bst_insert(t,i);
         }
         else if(c=='r'){
             scanf("%d",&i);
-            bst_remove(t,&i);
+            bst_remove(t,i);
         }
         else if(c=='f'){
             scanf("%d",&i);
-            if(bst_find(t,&i)){
+            if(bst_find(t,i)){
                 printf("%d se encontra na árvore.\n",i);
             }
             else{
