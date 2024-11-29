@@ -58,7 +58,7 @@ END_TEST
 Suite* make_generic_stack_suite(void){
     Suite *s;
     TCase *test_cases;
-    s = suite_create("Stack");
+    s = suite_create("Generic Stack");
     test_cases = tcase_create("Core");
     tcase_add_test(test_cases, test_generic_stack_empty);
     tcase_add_test(test_cases,test_generic_stack_initialization);

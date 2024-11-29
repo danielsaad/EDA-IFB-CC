@@ -1,33 +1,59 @@
 #include "stack.h"
 #include "../utils/alloc.h"
+#include <assert.h>
 
-void stack_initialize(stack_t **stack) {
-    *stack = mallocx(sizeof(stack_t));
-    dynamic_array_initialize(&(*stack)->stack_array);
+static void stack_expand(stack_t *s);
+static void stack_shrink(stack_t *s);
+
+void stack_initialize(stack_t **s) {
+    *s = mallocx(sizeof(stack_t));
+    (*s)->capacity = 4;
+    (*s)->stack = mallocx(sizeof(int) * (*s)->capacity);
+    (*s)->size = 0;
 }
 
-void stack_delete(stack_t **stack) {
-    dynamic_array_delete(&(*stack)->stack_array);
-    free(*stack);
-    *stack = NULL;
+static void stack_expand(stack_t *s) {
+    s->capacity *= 2;
+    s->stack = reallocx(s->stack, sizeof(int) * s->capacity);
 }
 
-void stack_push(stack_t *stack, int data) {
-    dynamic_array_push_back(stack->stack_array, data);
+static void stack_shrink(stack_t *s) {
+    s->capacity /= 2;
+    s->stack = reallocx(s->stack, sizeof(int) * s->capacity);
 }
 
-int stack_top(stack_t *stack) {
-    return dynamic_array_back(stack->stack_array);
+void stack_delete(stack_t **s) {
+    while (!stack_empty(*s)) {
+        stack_pop(*s);
+    }
+    free((*s)->stack);
+    free(*s);
+    *s = NULL;
 }
 
-void stack_pop(stack_t *stack) {
-    dynamic_array_pop_back(stack->stack_array);
+void stack_push(stack_t *s, int data) {
+    if (s->size == s->capacity) {
+        stack_expand(s);
+    }
+    s->stack[s->size++] = data;
 }
 
-bool stack_empty(stack_t *stack) {
-    return stack_size(stack) == 0;
+int stack_top(stack_t *s) {
+    assert(!stack_empty(s));
+    return s->stack[s->size - 1];
 }
 
-size_t stack_size(stack_t *stack) {
-    return dynamic_array_size(stack->stack_array);
+void stack_pop(stack_t *s) {
+    if (s->size == s->capacity / 4 && s->capacity > 4) {
+        stack_shrink(s);
+    }
+    s->size--;
+}
+
+bool stack_empty(stack_t *s) {
+    return stack_size(s) == 0;
+}
+
+size_t stack_size(stack_t *s) {
+    return s->size;
 }

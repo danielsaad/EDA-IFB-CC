@@ -3,6 +3,7 @@
 
 #include <check.h>
 
+Suite *make_stack_suite(void);
 Suite *make_bst_suite(void);
 Suite *make_avl_tree_suite(void);
 Suite *make_dynamic_array_suite(void);

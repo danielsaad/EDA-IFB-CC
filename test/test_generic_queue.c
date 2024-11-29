@@ -59,7 +59,7 @@ END_TEST
 Suite* make_generic_queue_suite(void){
     Suite *s;
     TCase *test_cases;
-    s = suite_create("Queue");
+    s = suite_create("Generic Queue");
     test_cases = tcase_create("Core");
     tcase_add_test(test_cases, test_generic_queue_empty);
     tcase_add_test(test_cases,test_generic_queue_initialization);
