@@ -23,9 +23,6 @@ static void stack_shrink(stack_t *s) {
 }
 
 void stack_delete(stack_t **s) {
-    while (!stack_empty(*s)) {
-        stack_pop(*s);
-    }
     free((*s)->stack);
     free(*s);
     *s = NULL;
