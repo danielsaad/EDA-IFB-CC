@@ -43,7 +43,7 @@ void merge_sort(int *v, size_t size) {
         mid = size / 2;
         /* aloca espaço para os subvetores */
         int *v1 = mallocx(sizeof(int) * mid);
-        int *v2 = mallocx(sizeof(int) * size - mid);
+        int *v2 = mallocx(sizeof(int) * (size - mid));
         /* Copia os elementos de v para os subvetores */
         int i;
         for (i = 0; i < mid; i++) {
