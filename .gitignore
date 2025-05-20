@@ -4,3 +4,4 @@ objects/*
 lib/*
 test/main
 *a.out
+.vscode/
