@@ -17,17 +17,42 @@ void queue_delete(queue_t **q) {
     *q = NULL;
 }
 
+static void queue_expand(queue_t *q) {
+    size_t old_capacity = q->capacity;
+    q->capacity *= 2;
+    q->queue = reallocx(q->queue, sizeof(int) * q->capacity);
+    if (q->front > q->back) {
+        for (size_t i = q->front; i < old_capacity; i++) {
+            q->queue[i + old_capacity] = q->queue[i];
+        }
+        q->front = q->front + old_capacity;
+    }
+}
+
+static void queue_shrink(queue_t *q) {
+    size_t new_capacity = q->capacity / 2;
+    if (q->front <= q->back) {
+        for (size_t i = q->front, j = 0; i <= q->back; i++, j++) {
+            q->queue[j] = q->queue[i];
+        }
+    } else {
+        size_t front_len = q->capacity - q->front;
+        for (int i = q->back; i >= 0; i--) {
+            q->queue[i + front_len] = q->queue[i];
+        }
+        for (size_t i = q->front, j = 0; i < q->capacity; i++, j++) {
+            q->queue[j] = q->queue[i];
+        }
+    }
+    q->front = 0;
+    q->back = q->size - 1;
+    q->capacity = new_capacity;
+    q->queue = reallocx(q->queue, q->capacity * sizeof(int));
+}
+
 void queue_push(queue_t *q, int data) {
     if (q->size == q->capacity) {
-        size_t old_capacity = q->capacity;
-        q->capacity *= 2;
-        q->queue = reallocx(q->queue, sizeof(int) * q->capacity);
-        if (q->front > q->back) {
-            for (size_t i = q->front; i < old_capacity; i++) {
-                q->queue[i + old_capacity] = q->queue[i];
-            }
-            q->front = q->front + old_capacity;
-        }
+        queue_expand(q);
     }
     q->back++;
     if (q->back == q->capacity)
@@ -39,24 +64,7 @@ void queue_push(queue_t *q, int data) {
 void queue_pop(queue_t *q) {
     assert(q->size > 0);
     if (q->size == q->capacity / 4 && q->capacity > 4) {
-        size_t new_capacity = q->capacity / 2;
-        if (q->front <= q->back) {
-            for (size_t i = q->front, j = 0; i <= q->back; i++, j++) {
-                q->queue[j] = q->queue[i];
-            }
-        } else {
-            size_t front_len = q->capacity - q->front;
-            for (int i = q->back; i >= 0; i--) {
-                q->queue[i + front_len] = q->queue[i];
-            }
-            for (size_t i = q->front, j = 0; i < q->capacity; i++, j++) {
-                q->queue[j] = q->queue[i];
-            }
-        }
-        q->front = 0;
-        q->back = q->size - 1;
-        q->capacity = new_capacity;
-        q->queue = reallocx(q->queue, q->capacity * sizeof(int));
+        queue_shrink(q);
     }
     q->front++;
     q->size--;
