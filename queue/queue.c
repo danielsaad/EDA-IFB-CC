@@ -68,8 +68,9 @@ void queue_pop(queue_t *q) {
     }
     q->front++;
     q->size--;
-    if (q->front == q->capacity)
+    if (q->front == q->capacity) {
         q->front = 0;
+    }
 }
 
 int queue_front(queue_t *q) {
